@@ -1,12 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title 'Home' %}
+{% block title %}Home{% endblock %}
+
 {% block body %}
     <main class="main"></main>
 {% endblock %}
+
 {% block javascripts %}
-    {{ encore_entry_script_tags('index', null, 'js') }}
+    {{ encore_entry_script_tags('index') }}
 {% endblock %}
+
 {% block stylesheets %}
-    {{ encore_entry_link_tags('main', null, 'css') }}
+    {{ encore_entry_link_tags('main') }}
 {% endblock %}

@@ -1,5 +1,5 @@
-import * as ReactDOM from "react-dom";
 import * as React from "react";
+import * as ReactDOM from "react-dom/client";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { App } from "./react/App";
 
@@ -10,5 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
     throw new Error("No container found");
   }
 
-  ReactDOM.render((<App />) as React.ReactElement<any>, reactContainer);
+  const root = ReactDOM.createRoot(reactContainer);
+  root.render(<App />);
 });
