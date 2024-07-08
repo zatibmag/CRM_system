@@ -33,6 +33,9 @@ class Project
     #[ORM\Column]
     private ?bool $status = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $projectName = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,6 +109,18 @@ class Project
     public function setStatus(bool $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getProjectName(): ?string
+    {
+        return $this->projectName;
+    }
+
+    public function setProjectName(string $projectName): static
+    {
+        $this->projectName = $projectName;
 
         return $this;
     }
