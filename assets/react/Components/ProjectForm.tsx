@@ -1,6 +1,8 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useProjectType } from "../Hooks/useProjectTypes";
+import { useCsrfToken } from "../Hooks/useCsrfToken";
 
 interface ProjectFormProps {
   projectId: number;
@@ -14,40 +16,8 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
   const [endDate, setEndDate] = useState("");
   const [comment, setComment] = useState("");
   const [status, setStatus] = useState("Active");
-  const [csrfToken, setCsrfToken] = useState("");
-  const [availableProjectTypes, setAvailableProjectTypes] = useState<string[]>(
-    []
-  );
-
-  useEffect(() => {
-    const fetchProjectTypes = async () => {
-      try {
-        const response = await axios.post(
-          "http://127.0.0.1:8000/project/project-types"
-        );
-        setAvailableProjectTypes(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchProjectTypes();
-  }, []);
-
-  useEffect(() => {
-    const fetchCsrfToken = async () => {
-      try {
-        const response = await axios.get(
-          "http://127.0.0.1:8000/project/csrf-token"
-        );
-        setCsrfToken(response.data.csrf_token);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchCsrfToken();
-  }, []);
+  const { csrfToken } = useCsrfToken();
+  const { availableProjectTypes } = useProjectType();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
