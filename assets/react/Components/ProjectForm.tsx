@@ -2,16 +2,37 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export function ProjectForm() {
+interface ProjectFormProps {
+  projectId: number;
+}
+
+export function ProjectForm({ projectId }: ProjectFormProps) {
   const [projectName, setProjectName] = useState("");
   const [projectType, setProjectType] = useState("");
   const [projectManager, setProjectManager] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [employeeId, setEmployeeId] = useState("");
   const [comment, setComment] = useState("");
   const [status, setStatus] = useState("Active");
   const [csrfToken, setCsrfToken] = useState("");
+  const [availableProjectTypes, setAvailableProjectTypes] = useState<string[]>(
+    []
+  );
+
+  useEffect(() => {
+    const fetchProjectTypes = async () => {
+      try {
+        const response = await axios.post(
+          "http://127.0.0.1:8000/project/project-types"
+        );
+        setAvailableProjectTypes(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchProjectTypes();
+  }, []);
 
   useEffect(() => {
     const fetchCsrfToken = async () => {
@@ -21,7 +42,7 @@ export function ProjectForm() {
         );
         setCsrfToken(response.data.csrf_token);
       } catch (error) {
-        console.error("Error fetching CSRF token:", error);
+        console.error(error);
       }
     };
 
@@ -42,17 +63,37 @@ export function ProjectForm() {
         status,
         _csrf_token: csrfToken,
       });
-
-      console.log("Project created successfully:", response.data);
     } catch (error) {
-      console.error("Error creating project:", error);
+      console.error(error);
+    }
+  };
+
+  const handleUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      const response = await axios.put(
+        `http://127.0.0.1:8000/project/${projectId}/edit`,
+        {
+          projectName,
+          projectType,
+          startDate,
+          endDate,
+          projectManager,
+          comment,
+          status,
+          _csrf_token: csrfToken,
+        }
+      );
+    } catch (error) {
+      console.error(error);
     }
   };
 
   return (
     <div>
-      <h2>Create New Project</h2>
-      <form onSubmit={handleSubmit}>
+      <h2>{projectId ? "Update Project" : "Create New Project"}</h2>
+      <form onSubmit={projectId ? handleUpdate : handleSubmit}>
         <div>
           <label htmlFor="projectName">Project Name:</label>
           <input
@@ -65,13 +106,18 @@ export function ProjectForm() {
         </div>
         <div>
           <label htmlFor="projectType">Project Type:</label>
-          <input
-            type="text"
+          <select
             id="projectType"
             value={projectType}
             onChange={(e) => setProjectType(e.target.value)}
             required
-          />
+          >
+            {availableProjectTypes.map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
           <label htmlFor="startDate">Start Date:</label>
@@ -123,7 +169,9 @@ export function ProjectForm() {
             <option value="Inactive">Inactive</option>
           </select>
         </div>
-        <button type="submit">Create Project</button>
+        <button type="submit">
+          {projectId ? "Update Project" : "Create Project"}
+        </button>
       </form>
     </div>
   );

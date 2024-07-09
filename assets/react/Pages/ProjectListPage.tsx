@@ -1,9 +1,12 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { ProjectForm } from "../Components/ProjectForm";
 
 export function ProjectListPage(): React.JSX.Element {
   const [projects, setProjects] = useState<any[]>([]);
+  const [click, setClick] = useState(false);
+  const [projectId, setProjectId] = useState(null);
 
   const fetchProjects = async () => {
     try {
@@ -27,10 +30,23 @@ export function ProjectListPage(): React.JSX.Element {
             <div key={project.id}>
               <p>ID: {project.id}</p>
               <p>Project Name: {project.name}</p>
+              <button
+                onClick={() => {
+                  setClick(!click);
+                  setProjectId(project.id);
+                }}
+              >
+                Update
+              </button>
             </div>
           ))}
         </div>
       </div>
+      {click ? (
+        <ProjectForm projectId={projectId} />
+      ) : (
+        <button onClick={() => setClick(!click)}>Form</button>
+      )}
     </div>
   );
 }

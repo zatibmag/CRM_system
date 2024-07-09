@@ -40,15 +40,20 @@ class ProjectController extends AbstractController
         return new JsonResponse($projectsArray);
     }
 
+    #[Route('/project-types', name: 'project-types', methods: ['POST'])]
+    public function project_types(): JsonResponse
+    {
+        return new JsonResponse(Project::PROJECT_TYPES);
+    }
+
     #[Route('/new', name: 'app_project_new', methods: ['POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         
-        // Validate CSRF token
         $csrfToken = new CsrfToken('project_form', $data['_csrf_token'] ?? '');
         if (!$this->csrfTokenManager->isTokenValid($csrfToken)) {
-            return new JsonResponse(['error' => 'Invalid CSRF token'], JsonResponse::HTTP_FORBIDDEN);
+            return new JsonResponse(JsonResponse::HTTP_FORBIDDEN);
         }
 
         $project = new Project();
@@ -59,15 +64,10 @@ class ProjectController extends AbstractController
             $entityManager->persist($project);
             $entityManager->flush();
 
-            return new JsonResponse(['message' => 'Project created successfully'], JsonResponse::HTTP_CREATED);
+            return new JsonResponse(JsonResponse::HTTP_CREATED);
         }
 
-        $errors = [];
-        foreach ($form->getErrors(true) as $error) {
-            $errors[] = $error->getMessage();
-        }
-
-        return new JsonResponse(['errors' => $errors], JsonResponse::HTTP_BAD_REQUEST);
+        return new JsonResponse(JsonResponse::HTTP_BAD_REQUEST);
     }
 
     #[Route('/csrf-token', name: 'app_csrf_token', methods: ['GET'])]
@@ -85,22 +85,26 @@ class ProjectController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_project_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Project $project, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/edit', name: 'app_project_edit', methods: ['PUT'])]
+    public function edit(Request $request, Project $project, EntityManagerInterface $entityManager): JsonResponse
     {
+        $data = json_decode($request->getContent(), true);
+
+        $csrfToken = new CsrfToken('project_form', $data['_csrf_token'] ?? '');
+        if (!$this->csrfTokenManager->isTokenValid($csrfToken)) {
+            return new JsonResponse(JsonResponse::HTTP_FORBIDDEN);
+        }
+
         $form = $this->createForm(ProjectType::class, $project);
-        $form->handleRequest($request);
+        $form->submit($data, false);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_project_index', [], Response::HTTP_SEE_OTHER);
+            return new JsonResponse(JsonResponse::HTTP_OK);
         }
 
-        return $this->render('project/edit.html.twig', [
-            'project' => $project,
-            'form' => $form,
-        ]);
+        return new JsonResponse(JsonResponse::HTTP_BAD_REQUEST);
     }
 
     #[Route('/{id}', name: 'app_project_delete', methods: ['POST'])]
