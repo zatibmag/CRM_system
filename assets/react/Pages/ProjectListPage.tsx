@@ -4,6 +4,7 @@ import { ProjectForm } from "../Components/ProjectForm";
 import { useProjects } from "../Hooks/useProjects";
 import { ProjectFilterMenu } from "../Components/ProjectFilterMenu";
 import { renderProjects } from "../Components/RenderProjects";
+import { ProjectTableHead } from "../Components/ProjectTableHead";
 
 export function ProjectListPage(): React.JSX.Element {
   const [click, setClick] = useState(false);
@@ -24,6 +25,10 @@ export function ProjectListPage(): React.JSX.Element {
         : "ascending";
     setSortConfig({ key, direction: newDirection });
   };
+
+  useEffect(() => {
+    setFilteredProjects(projects);
+  }, [projects]);
 
   useEffect(() => {
     if (sortConfig.key !== "") {
@@ -89,75 +94,7 @@ export function ProjectListPage(): React.JSX.Element {
       </div>
       <div className="table-responsive">
         <table className="table table-bordered table-hover">
-          <thead className="thead-dark">
-            <tr>
-              <th>
-                <button
-                  className="btn btn-link"
-                  onClick={() => handleSort("id")}
-                >
-                  ID
-                </button>
-              </th>
-              <th>
-                <button
-                  className="btn btn-link"
-                  onClick={() => handleSort("name")}
-                >
-                  Name
-                </button>
-              </th>
-              <th>
-                <button
-                  className="btn btn-link"
-                  onClick={() => handleSort("projectType")}
-                >
-                  Type
-                </button>
-              </th>
-              <th>
-                <button
-                  className="btn btn-link"
-                  onClick={() => handleSort("startDate.date")}
-                >
-                  Start Date
-                </button>
-              </th>
-              <th>
-                <button
-                  className="btn btn-link"
-                  onClick={() => handleSort("endDate.date")}
-                >
-                  End Date
-                </button>
-              </th>
-              <th>
-                <button
-                  className="btn btn-link"
-                  onClick={() => handleSort("projectManager")}
-                >
-                  Project Manager
-                </button>
-              </th>
-              <th>
-                <button
-                  className="btn btn-link"
-                  onClick={() => handleSort("status")}
-                >
-                  Status
-                </button>
-              </th>
-              <th>
-                <button
-                  className="btn btn-link"
-                  onClick={() => handleSort("comment")}
-                >
-                  Comment
-                </button>
-              </th>
-              <th>Actions</th>
-            </tr>
-          </thead>
+          <ProjectTableHead handleSort={handleSort} />
           {renderProjects({
             filteredProjects,
             setClick,
