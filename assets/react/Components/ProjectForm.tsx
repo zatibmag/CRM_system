@@ -16,7 +16,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [comment, setComment] = useState("");
-  const [status, setStatus] = useState("Active");
+  const [status, setStatus] = useState("");
   const { csrfToken } = useCsrfToken();
   const { availableProjectTypes } = useProjectType();
   const { statusChoise } = useStatusChoise();

@@ -43,7 +43,7 @@ class Project
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $comment = null;
 
-    #[ORM\Column]
+    #[ORM\Column(length: 255)]
     private ?string $status = null;
 
     #[ORM\Column(length: 255)]
@@ -119,7 +119,7 @@ class Project
         return $this->status;
     }
 
-    public function setStatus(bool $status): static
+    public function setStatus(string $status): static
     {
         $this->status = $status;
 
