@@ -82,10 +82,17 @@ class ProjectController extends AbstractController
         return new JsonResponse(JsonResponse::HTTP_BAD_REQUEST);
     }
 
-    #[Route('/csrf-token', name: 'app_csrf_token', methods: ['GET'])]
-    public function getCsrfToken(): JsonResponse
+    #[Route('/csrf-token-form', name: 'app_csrf_token_form', methods: ['GET'])]
+    public function getCsrfTokenForm(): JsonResponse
     {
         $csrfToken = $this->csrfTokenManager->getToken('project_form')->getValue();
+        return new JsonResponse(['csrf_token' => $csrfToken]);
+    }
+
+    #[Route('/csrf-token-delete', name: 'app_csrf_token_delete', methods: ['GET'])]
+    public function getCsrfTokenDelete(): JsonResponse
+    {
+        $csrfToken = $this->csrfTokenManager->getToken('delete_project')->getValue();
         return new JsonResponse(['csrf_token' => $csrfToken]);
     }
 
@@ -119,14 +126,19 @@ class ProjectController extends AbstractController
         return new JsonResponse(JsonResponse::HTTP_BAD_REQUEST);
     }
 
-    #[Route('/{id}', name: 'app_project_delete', methods: ['POST'])]
-    public function delete(Request $request, Project $project, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/delete', name: 'app_project_delete', methods: ['DELETE'])]
+    public function delete(Request $request, Project $project, EntityManagerInterface $entityManager): JsonResponse
     {
-        if ($this->isCsrfTokenValid('delete'.$project->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($project);
-            $entityManager->flush();
+        $csrfToken = $this->csrfTokenManager->getToken('delete'.$project->getId())->getValue();
+    
+        if (!$this->isCsrfTokenValid('delete'.$project->getId(), $csrfToken)) {
+            return new JsonResponse(JsonResponse::HTTP_FORBIDDEN);
         }
-
-        return $this->redirectToRoute('app_project_index', [], Response::HTTP_SEE_OTHER);
+    
+        $entityManager->remove($project);
+        $entityManager->flush();
+    
+        return new JsonResponse(JsonResponse::HTTP_NO_CONTENT);
     }
+    
 }

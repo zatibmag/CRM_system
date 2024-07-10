@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useProjectType } from "../Hooks/useProjectTypes";
-import { useCsrfToken } from "../Hooks/useCsrfToken";
+import { useCsrfTokenForm } from "../Hooks/useCsrfTokenForm";
 import { useStatusChoise } from "../Hooks/useStatusChoise";
 
 interface ProjectFormProps {
@@ -17,7 +17,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
   const [endDate, setEndDate] = useState("");
   const [comment, setComment] = useState("");
   const [status, setStatus] = useState("");
-  const { csrfToken } = useCsrfToken();
+  const { csrfTokenForm } = useCsrfTokenForm();
   const { availableProjectTypes } = useProjectType();
   const { statusChoise } = useStatusChoise();
 
@@ -33,7 +33,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
         projectManager,
         comment,
         status,
-        _csrf_token: csrfToken,
+        _csrf_token: csrfTokenForm,
       });
     } catch (error) {
       console.error(error);
@@ -54,7 +54,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
           projectManager,
           comment,
           status,
-          _csrf_token: csrfToken,
+          _csrf_token: csrfTokenForm,
         }
       );
     } catch (error) {
