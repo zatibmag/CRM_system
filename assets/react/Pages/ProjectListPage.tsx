@@ -1,18 +1,14 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { ProjectForm } from "../Components/ProjectForm";
-import { useCsrfTokenDelete } from "../Hooks/useCsrfTokenDelete";
 import { useProjects } from "../Hooks/useProjects";
-import { useProjectType } from "../Hooks/useProjectTypes";
-import { useStatusChoice } from "../Hooks/useStatusChoice";
 import { ProjectFilterMenu } from "../Components/ProjectFilterMenu";
+import { renderProjects } from "../Components/RenderProjects";
 
 export function ProjectListPage(): React.JSX.Element {
   const [click, setClick] = useState(false);
   const [projectId, setProjectId] = useState<number | null>(null);
-  const { csrfTokenDelete } = useCsrfTokenDelete();
-  const { projects, setProjects } = useProjects();
+  const { projects } = useProjects();
 
   const [sortConfig, setSortConfig] = useState<{
     key: string;
@@ -66,71 +62,6 @@ export function ProjectListPage(): React.JSX.Element {
       return valueA.localeCompare(valueB);
     }
     return valueA - valueB;
-  };
-
-  const handleDelete = async (id: number) => {
-    try {
-      const response = await axios.delete(
-        `//127.0.0.1:8000/project/${id}/delete`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          data: {
-            _csrf_token: csrfTokenDelete,
-          },
-        }
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const renderProjects = () => {
-    return (
-      <tbody>
-        {filteredProjects.map((project) => (
-          <tr key={project.id}>
-            <td>{project.id}</td>
-            <td>{project.name}</td>
-            <td>{project.projectType}</td>
-            <td>
-              {project.startDate
-                ? new Date(project.startDate.date).toLocaleDateString()
-                : "-"}
-            </td>
-            <td>
-              {project.endDate
-                ? new Date(project.endDate.date).toLocaleDateString()
-                : "-"}
-            </td>
-
-            <td>{project.projectManager}</td>
-            <td>{project.status}</td>
-            <td>{project.comment}</td>
-            <td>
-              <button
-                className="btn btn-primary"
-                onClick={() => {
-                  setClick(true);
-                  setProjectId(project.id);
-                }}
-              >
-                Update
-              </button>
-              <button
-                onClick={() => {
-                  handleDelete(project.id);
-                }}
-                className={"btn btn-danger"}
-              >
-                Delete Project
-              </button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    );
   };
 
   if (click) {
@@ -227,7 +158,11 @@ export function ProjectListPage(): React.JSX.Element {
               <th>Actions</th>
             </tr>
           </thead>
-          {renderProjects()}
+          {renderProjects({
+            filteredProjects,
+            setClick,
+            setProjectId,
+          })}
         </table>
       </div>
       <button className="btn btn-primary mt-3" onClick={() => setClick(true)}>
