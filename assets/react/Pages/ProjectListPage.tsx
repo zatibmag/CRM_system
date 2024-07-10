@@ -6,7 +6,7 @@ import { ProjectForm } from "../Components/ProjectForm";
 export function ProjectListPage(): React.JSX.Element {
   const [projects, setProjects] = useState<any[]>([]);
   const [click, setClick] = useState(false);
-  const [projectId, setProjectId] = useState(null);
+  const [projectId, setProjectId] = useState<number | null>(null);
 
   const fetchProjects = async () => {
     try {
@@ -21,32 +21,83 @@ export function ProjectListPage(): React.JSX.Element {
     fetchProjects();
   }, []);
 
-  return (
-    <div className="border border-secondary rounded bg-gradient p-2 col-md-8">
-      <h2>Projects</h2>
-      <div className="row justify-content-center">
-        <div className="container">
-          {projects.map((project) => (
-            <div key={project.id}>
-              <p>ID: {project.id}</p>
-              <p>Project Name: {project.name}</p>
+  const renderProjects = () => {
+    return (
+      <tbody>
+        {projects.map((project) => (
+          <tr key={project.id}>
+            <td>{project.id}</td>
+            <td>{project.name}</td>
+            <td>{project.projectType}</td>
+            <td>
+              {project.startDate
+                ? new Date(project.startDate.date).toLocaleDateString()
+                : "-"}
+            </td>
+            <td>
+              {project.endDate
+                ? new Date(project.endDate.date).toLocaleDateString()
+                : "-"}
+            </td>
+
+            <td>{project.projectManager}</td>
+            <td>{project.status ? "Active" : "Inactive"}</td>
+            <td>{project.comment}</td>
+            <td>
               <button
+                className="btn btn-primary btn-sm"
                 onClick={() => {
-                  setClick(!click);
+                  setClick(true);
                   setProjectId(project.id);
                 }}
               >
                 Update
               </button>
-            </div>
-          ))}
-        </div>
-      </div>
-      {click ? (
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    );
+  };
+
+  if (click) {
+    return (
+      <div>
         <ProjectForm projectId={projectId} />
-      ) : (
-        <button onClick={() => setClick(!click)}>Form</button>
-      )}
+        <button
+          className="btn btn-secondary mt-3"
+          onClick={() => setClick(false)}
+        >
+          Back
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="border border-secondary rounded bg-gradient col-md-8">
+      <h2 className="mb-4">Projects</h2>
+      <div className="table-responsive">
+        <table className="table table-bordered table-hover">
+          <thead className="thead-dark">
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Project Manager</th>
+              <th>Status</th>
+              <th>Comment</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          {renderProjects()}
+        </table>
+      </div>
+      <button className="btn btn-primary mt-3" onClick={() => setClick(true)}>
+        Form
+      </button>
     </div>
   );
 }

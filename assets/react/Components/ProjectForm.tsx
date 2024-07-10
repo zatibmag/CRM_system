@@ -82,6 +82,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
             onChange={(e) => setProjectType(e.target.value)}
             required
           >
+            <option value="">Select Project Type</option>
             {availableProjectTypes.map((type) => (
               <option key={type} value={type}>
                 {type}

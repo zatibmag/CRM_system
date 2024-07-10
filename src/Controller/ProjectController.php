@@ -34,6 +34,11 @@ class ProjectController extends AbstractController
             $projectsArray[] = [
                 'id' => $project->getId(),
                 'name' => $project->getProjectName(),
+                'projectType' => $project->getProjectType(),
+                'startDate' => $project->getStartDate(),
+                'endDate' => $project->getEndDate(),
+                'status' => $project->isStatus(),
+                'comment' => $project->getComment()
             ];
         }
 
