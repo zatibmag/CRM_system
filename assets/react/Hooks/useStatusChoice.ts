@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export function useStatusChoise() {
-  const [statusChoise, setStatusChoise] = useState<string[]>([]);
+export function useStatusChoice() {
+  const [statusChoice, setStatusChoice] = useState<string[]>([]);
   useEffect(() => {
     const fetchProjectTypes = async () => {
       try {
         const response = await axios.post(
-          "http://127.0.0.1:8000/project/status-choise"
+          "http://127.0.0.1:8000/project/status-choice"
         );
-        setStatusChoise(response.data);
+        setStatusChoice(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -19,6 +19,6 @@ export function useStatusChoise() {
   }, []);
 
   return {
-    statusChoise,
+    statusChoice,
   };
 }

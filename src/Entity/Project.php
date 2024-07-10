@@ -17,7 +17,7 @@ class Project
         "Product Launch"
     ];
 
-    public const STATUS_CHOISE = [
+    public const STATUS_CHOICE = [
         "Active",
         "Inactive"
     ];

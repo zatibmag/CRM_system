@@ -51,10 +51,10 @@ class ProjectController extends AbstractController
         return new JsonResponse(Project::PROJECT_TYPES);
     }
 
-    #[Route('/status-choise', name: 'status-choise', methods: ['POST'])]
-    public function status_choise(): JsonResponse
+    #[Route('/status-choice', name: 'status-choise', methods: ['POST'])]
+    public function status_choice(): JsonResponse
     {
-        return new JsonResponse(Project::STATUS_CHOISE);
+        return new JsonResponse(Project::STATUS_CHOICE);
     }
 
 

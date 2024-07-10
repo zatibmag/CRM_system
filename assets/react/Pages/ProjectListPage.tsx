@@ -5,25 +5,21 @@ import { ProjectForm } from "../Components/ProjectForm";
 import { useCsrfTokenDelete } from "../Hooks/useCsrfTokenDelete";
 import { useProjects } from "../Hooks/useProjects";
 import { useProjectType } from "../Hooks/useProjectTypes";
-import { useStatusChoise } from "../Hooks/useStatusChoise";
-import { Filter } from "../Components/filter";
+import { useStatusChoice } from "../Hooks/useStatusChoice";
+import { ProjectFilterMenu } from "../Components/ProjectFilterMenu";
 
 export function ProjectListPage(): React.JSX.Element {
   const [click, setClick] = useState(false);
   const [projectId, setProjectId] = useState<number | null>(null);
   const { csrfTokenDelete } = useCsrfTokenDelete();
   const { projects, setProjects } = useProjects();
-  const { availableProjectTypes } = useProjectType();
-  const { statusChoise } = useStatusChoise();
 
   const [sortConfig, setSortConfig] = useState<{
     key: string;
     direction: "ascending" | "descending";
   }>({ key: "", direction: "ascending" });
 
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [selectedProjectType, setSelectedProjectType] = useState<string>("");
-  const [selectedStatus, setSelectedStatus] = useState<string>("");
+  const [filteredProjects, setFilteredProjects] = useState<any[]>(projects);
 
   const handleSort = (key: string) => {
     const newDirection =
@@ -35,7 +31,7 @@ export function ProjectListPage(): React.JSX.Element {
 
   useEffect(() => {
     if (sortConfig.key !== "") {
-      const sortedProjects = [...projects].sort((a, b) => {
+      const sortedProjects = [...filteredProjects].sort((a, b) => {
         const valueA = getValueForSorting(a, sortConfig.key);
         const valueB = getValueForSorting(b, sortConfig.key);
 
@@ -45,9 +41,9 @@ export function ProjectListPage(): React.JSX.Element {
           return compareValues(valueB, valueA);
         }
       });
-      setProjects(sortedProjects);
+      setFilteredProjects(sortedProjects);
     }
-  }, [sortConfig, projects, setProjects]);
+  }, [sortConfig, filteredProjects]);
 
   const getValueForSorting = (item: any, key: string) => {
     const keys = key.split(".");
@@ -91,23 +87,6 @@ export function ProjectListPage(): React.JSX.Element {
   };
 
   const renderProjects = () => {
-    let filteredProjects = projects;
-    if (searchTerm) {
-      filteredProjects = filteredProjects.filter((project) =>
-        project.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-    if (selectedProjectType) {
-      filteredProjects = filteredProjects.filter(
-        (project) => project.projectType === selectedProjectType
-      );
-    }
-    if (selectedStatus) {
-      filteredProjects = filteredProjects.filter(
-        (project) => project.status === selectedStatus
-      );
-    }
-
     return (
       <tbody>
         {filteredProjects.map((project) => (
@@ -154,20 +133,6 @@ export function ProjectListPage(): React.JSX.Element {
     );
   };
 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleProjectTypeChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setSelectedProjectType(event.target.value);
-  };
-
-  const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedStatus(event.target.value);
-  };
-
   if (click) {
     return (
       <div>
@@ -186,24 +151,9 @@ export function ProjectListPage(): React.JSX.Element {
     <div className="border border-secondary rounded bg-gradient col-md-8">
       <h2 className="mb-4">Projects</h2>
       <div className="input-group mb-3">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Search by Project Name"
-          value={searchTerm}
-          onChange={handleSearch}
-        />
-        <Filter
-          availableOptions={availableProjectTypes}
-          selectedValue={selectedProjectType}
-          onChange={handleProjectTypeChange}
-          placeholder="All Project Types"
-        />
-        <Filter
-          availableOptions={statusChoise}
-          selectedValue={selectedStatus}
-          onChange={handleStatusChange}
-          placeholder="All statuses"
+        <ProjectFilterMenu
+          projects={projects}
+          setFilteredProjects={setFilteredProjects}
         />
       </div>
       <div className="table-responsive">

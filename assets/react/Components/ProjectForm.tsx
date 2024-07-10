@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useProjectType } from "../Hooks/useProjectTypes";
 import { useCsrfTokenForm } from "../Hooks/useCsrfTokenForm";
-import { useStatusChoise } from "../Hooks/useStatusChoise";
+import { useStatusChoice } from "../Hooks/useStatusChoice";
 
 interface ProjectFormProps {
   projectId: number;
@@ -19,7 +19,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
   const [status, setStatus] = useState("");
   const { csrfTokenForm } = useCsrfTokenForm();
   const { availableProjectTypes } = useProjectType();
-  const { statusChoise } = useStatusChoise();
+  const { statusChoice } = useStatusChoice();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -139,7 +139,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
             required
           >
             <option value="">Select status</option>
-            {statusChoise.map((type) => (
+            {statusChoice.map((type) => (
               <option key={type} value={type}>
                 {type}
               </option>
