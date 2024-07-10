@@ -21,6 +21,7 @@ export function ProjectListPage(): React.JSX.Element {
     fetchProjects();
   }, []);
 
+  console.log(projects);
   const renderProjects = () => {
     return (
       <tbody>
@@ -41,7 +42,7 @@ export function ProjectListPage(): React.JSX.Element {
             </td>
 
             <td>{project.projectManager}</td>
-            <td>{project.status ? "Active" : "Inactive"}</td>
+            <td>{project.status}</td>
             <td>{project.comment}</td>
             <td>
               <button

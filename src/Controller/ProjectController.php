@@ -37,7 +37,7 @@ class ProjectController extends AbstractController
                 'projectType' => $project->getProjectType(),
                 'startDate' => $project->getStartDate(),
                 'endDate' => $project->getEndDate(),
-                'status' => $project->isStatus(),
+                'status' => $project->getStatus(),
                 'comment' => $project->getComment()
             ];
         }
@@ -50,6 +50,13 @@ class ProjectController extends AbstractController
     {
         return new JsonResponse(Project::PROJECT_TYPES);
     }
+
+    #[Route('/status-choise', name: 'status-choise', methods: ['POST'])]
+    public function status_choise(): JsonResponse
+    {
+        return new JsonResponse(Project::STATUS_CHOISE);
+    }
+
 
     #[Route('/new', name: 'app_project_new', methods: ['POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): JsonResponse

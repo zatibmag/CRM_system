@@ -17,6 +17,11 @@ class Project
         "Product Launch"
     ];
 
+    public const STATUS_CHOISE = [
+        "Active",
+        "Inactive"
+    ];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -39,7 +44,7 @@ class Project
     private ?string $comment = null;
 
     #[ORM\Column]
-    private ?bool $status = null;
+    private ?string $status = null;
 
     #[ORM\Column(length: 255)]
     private ?string $projectName = null;
@@ -109,7 +114,7 @@ class Project
         return $this;
     }
 
-    public function isStatus(): ?bool
+    public function getStatus(): ?string
     {
         return $this->status;
     }
