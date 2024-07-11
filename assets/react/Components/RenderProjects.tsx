@@ -1,16 +1,18 @@
 import * as React from "react";
 import axios from "axios";
 import { useCsrfTokenDelete } from "../Hooks/useCsrfTokenDelete";
+import { DeleteButton } from "../Buttons/DeleteButton";
+import { UpdateButton } from "../Buttons/UpdateButton";
 
 interface RenderProjectsProps {
   filteredProjects: any[];
-  setClick: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
   setProjectId: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 export function RenderProjects({
   filteredProjects,
-  setClick,
+  setShowForm,
   setProjectId,
 }: RenderProjectsProps) {
   const { csrfTokenDelete } = useCsrfTokenDelete();
@@ -51,21 +53,17 @@ export function RenderProjects({
           <td>{project.status}</td>
           <td>{project.comment}</td>
           <td>
-            <button
-              className="btn btn-primary"
-              onClick={() => {
-                setClick(true);
-                setProjectId(project.id);
-              }}
-            >
-              Update
-            </button>
-            <button
-              onClick={() => handleDelete(project.id)}
-              className={"btn btn-danger"}
-            >
-              Delete Project
-            </button>
+            <UpdateButton
+              name={"Update"}
+              data={project.id}
+              setShowForm={setShowForm}
+              setProjectId={setProjectId}
+            />
+            <DeleteButton
+              name={"Delete Project"}
+              handleDelete={handleDelete}
+              data={project.id}
+            />
           </td>
         </tr>
       ))}

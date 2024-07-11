@@ -1,4 +1,5 @@
 import * as React from "react";
+import { SortButton } from "../Buttons/SortButton";
 
 interface ProjectTableHeadProps {
   handleSort: (key: string) => void;
@@ -9,59 +10,48 @@ export function ProjectTableHead({ handleSort }: ProjectTableHeadProps) {
     <thead className="thead-dark">
       <tr>
         <th>
-          <button className="btn btn-link" onClick={() => handleSort("id")}>
-            ID
-          </button>
+          <SortButton name={"ID"} handleSort={handleSort} data={"id"} />
         </th>
         <th>
-          <button className="btn btn-link" onClick={() => handleSort("name")}>
-            Name
-          </button>
+          <SortButton name={"Name"} handleSort={handleSort} data={"name"} />
         </th>
         <th>
-          <button
-            className="btn btn-link"
-            onClick={() => handleSort("projectType")}
-          >
-            Type
-          </button>
+          <SortButton
+            name={"Type"}
+            handleSort={handleSort}
+            data={"projectType"}
+          />
         </th>
         <th>
-          <button
-            className="btn btn-link"
-            onClick={() => handleSort("startDate.date")}
-          >
-            Start Date
-          </button>
+          <SortButton
+            name={"Start Date"}
+            handleSort={handleSort}
+            data={"startDate.date"}
+          />
         </th>
         <th>
-          <button
-            className="btn btn-link"
-            onClick={() => handleSort("endDate.date")}
-          >
-            End Date
-          </button>
+          <SortButton
+            name={"End Date"}
+            handleSort={handleSort}
+            data={"endDate.date"}
+          />
         </th>
         <th>
-          <button
-            className="btn btn-link"
-            onClick={() => handleSort("projectManager")}
-          >
-            Project Manager
-          </button>
+          <SortButton
+            name={"Project Manager"}
+            handleSort={handleSort}
+            data={"projectManager"}
+          />
         </th>
         <th>
-          <button className="btn btn-link" onClick={() => handleSort("status")}>
-            Status
-          </button>
+          <SortButton name={"Status"} handleSort={handleSort} data={"status"} />
         </th>
         <th>
-          <button
-            className="btn btn-link"
-            onClick={() => handleSort("comment")}
-          >
-            Comment
-          </button>
+          <SortButton
+            name={"Comment"}
+            handleSort={handleSort}
+            data={"comment"}
+          />
         </th>
         <th>Actions</th>
       </tr>

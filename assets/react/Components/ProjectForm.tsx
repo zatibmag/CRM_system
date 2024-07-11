@@ -4,6 +4,7 @@ import axios from "axios";
 import { useProjectType } from "../Hooks/useProjectTypes";
 import { useCsrfTokenForm } from "../Hooks/useCsrfTokenForm";
 import { useStatusChoice } from "../Hooks/useStatusChoice";
+import { SubmitButton } from "../Buttons/SumbitButton";
 
 interface ProjectFormProps {
   projectId: number;
@@ -146,9 +147,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
             ))}
           </select>
         </div>
-        <button type="submit">
-          {projectId ? "Update Project" : "Create Project"}
-        </button>
+        <SubmitButton projectId={projectId} />
       </form>
     </div>
   );

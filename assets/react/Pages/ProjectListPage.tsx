@@ -5,9 +5,11 @@ import { useProjects } from "../Hooks/useProjects";
 import { ProjectFilterMenu } from "../Components/ProjectFilterMenu";
 import { RenderProjects } from "../Components/RenderProjects";
 import { ProjectTableHead } from "../Components/ProjectTableHead";
+import { CreateNewButton } from "../Buttons/CreateNewButton";
+import { BackButton } from "../Buttons/BackButton";
 
 export function ProjectListPage(): React.JSX.Element {
-  const [click, setClick] = useState(false);
+  const [showForm, setShowForm] = useState(false);
   const [projectId, setProjectId] = useState<number | null>(null);
   const { projects } = useProjects();
 
@@ -69,42 +71,41 @@ export function ProjectListPage(): React.JSX.Element {
     return valueA - valueB;
   };
 
-  if (click) {
+  function ShowForm() {
     return (
       <div>
         <ProjectForm projectId={projectId} />
-        <button
-          className="btn btn-secondary mt-3"
-          onClick={() => setClick(false)}
-        >
-          Back
-        </button>
+        <BackButton setShowForm={setShowForm} />
       </div>
     );
   }
 
   return (
-    <div className="border border-secondary rounded bg-gradient col-md-8">
-      <h2 className="mb-4">Projects</h2>
-      <div className="input-group mb-3">
-        <ProjectFilterMenu
-          projects={projects}
-          setFilteredProjects={setFilteredProjects}
-        />
-      </div>
-      <div className="table-responsive">
-        <table className="table table-bordered table-hover">
-          <ProjectTableHead handleSort={handleSort} />
-          <RenderProjects
-            filteredProjects={filteredProjects}
-            setClick={setClick}
-            setProjectId={setProjectId}
-          />
-        </table>
-      </div>
-      <button className="btn btn-primary mt-3" onClick={() => setClick(true)}>
-        Create new project
-      </button>
-    </div>
+    <>
+      {showForm ? (
+        ShowForm()
+      ) : (
+        <div className="border border-secondary rounded bg-gradient col-md-8">
+          <h2 className="mb-4">Projects</h2>
+          <div className="input-group mb-3">
+            <ProjectFilterMenu
+              projects={projects}
+              setFilteredProjects={setFilteredProjects}
+            />
+          </div>
+          <div className="table-responsive">
+            <table className="table table-bordered table-hover">
+              <ProjectTableHead handleSort={handleSort} />
+              <RenderProjects
+                filteredProjects={filteredProjects}
+                setShowForm={setShowForm}
+                setProjectId={setProjectId}
+              />
+            </table>
+          </div>
+          <CreateNewButton setShowForm={setShowForm} />
+        </div>
+      )}
+    </>
   );
 }
