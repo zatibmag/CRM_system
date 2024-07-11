@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { ProjectForm } from "../Components/ProjectForm";
 import { useProjects } from "../Hooks/useProjects";
 import { ProjectFilterMenu } from "../Components/ProjectFilterMenu";
-import { renderProjects } from "../Components/RenderProjects";
+import { RenderProjects } from "../Components/RenderProjects";
 import { ProjectTableHead } from "../Components/ProjectTableHead";
 
 export function ProjectListPage(): React.JSX.Element {
@@ -95,11 +95,11 @@ export function ProjectListPage(): React.JSX.Element {
       <div className="table-responsive">
         <table className="table table-bordered table-hover">
           <ProjectTableHead handleSort={handleSort} />
-          {renderProjects({
-            filteredProjects,
-            setClick,
-            setProjectId,
-          })}
+          <RenderProjects
+            filteredProjects={filteredProjects}
+            setClick={setClick}
+            setProjectId={setProjectId}
+          />
         </table>
       </div>
       <button className="btn btn-primary mt-3" onClick={() => setClick(true)}>

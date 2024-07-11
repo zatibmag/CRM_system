@@ -8,7 +8,7 @@ interface RenderProjectsProps {
   setProjectId: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
-export function renderProjects({
+export function RenderProjects({
   filteredProjects,
   setClick,
   setProjectId,
