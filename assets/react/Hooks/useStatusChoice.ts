@@ -4,7 +4,7 @@ import axios from "axios";
 export function useStatusChoice() {
   const [statusChoice, setStatusChoice] = useState<string[]>([]);
   useEffect(() => {
-    const fetchProjectTypes = async () => {
+    const fetchStatusChoice = async () => {
       try {
         const response = await axios.post(
           "http://127.0.0.1:8000/project/status-choice"
@@ -15,7 +15,7 @@ export function useStatusChoice() {
       }
     };
 
-    fetchProjectTypes();
+    fetchStatusChoice();
   }, []);
 
   return {

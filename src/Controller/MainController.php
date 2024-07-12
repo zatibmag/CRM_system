@@ -33,7 +33,7 @@ class MainController extends AbstractController
         // Create a new Employee entity
         $employee = new Employee();
         $employee->setFullName('Aboba Abobowitch');
-        $employee->setRoles(['ROLE_USER']);
+        $employee->setRoles(['ROLE_PROJECT_MANAGER']);
         $employee->setPassword('password'); // You should hash the password in a real application
         $employee->setSubdivision('Subdivision');
         $employee->setPosition('Position');

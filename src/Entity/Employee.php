@@ -13,6 +13,30 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_FULL_NAME', fields: ['fullName'])]
 class Employee implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    public const ROLES = [
+        "ROLE_EMPLOYEE",
+        "ROLE_HR_MANAGER",
+        "ROLE_PROJECT_MANAGER",
+        "ROLE_ADMINISTRATOR",
+    ];
+
+    public const POSITIONS = [
+        "HR_MANAGER",
+        "PROJECT_MANAGER",
+        "ADMINISTRATOR",
+        "PROGRAMMER"
+    ];
+
+    public const SUBDIVISIONS = [
+        "Human Resources (HR)",
+        "Finance",
+        "Marketing",
+        "Sales",
+        "Research and Development (R&D)",
+        "Information Technology (IT)"
+    ];
+
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -57,9 +81,16 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'projectManager')]
     private Collection $projects;
 
+    /**
+     * @var Collection<int, Project>
+     */
+    #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'employee')]
+    private Collection $currentProjects;
+
     public function __construct()
     {
         $this->projects = new ArrayCollection();
+        $this->currentProjects = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -233,6 +264,36 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($project->getProjectManager() === $this) {
                 $project->setProjectManager(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Project>
+     */
+    public function getCurrentProjects(): Collection
+    {
+        return $this->currentProjects;
+    }
+
+    public function addCurrentProject(Project $currentProject): static
+    {
+        if (!$this->currentProjects->contains($currentProject)) {
+            $this->currentProjects->add($currentProject);
+            $currentProject->setEmployee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCurrentProject(Project $currentProject): static
+    {
+        if ($this->currentProjects->removeElement($currentProject)) {
+            // set the owning side to null (unless already changed)
+            if ($currentProject->getEmployee() === $this) {
+                $currentProject->setEmployee(null);
             }
         }
 

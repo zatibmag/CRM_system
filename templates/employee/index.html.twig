@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Employee index{% endblock %}
+
+{% block body %}
+    <h1>Employee index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>FullName</th>
+                <th>Roles</th>
+                <th>Password</th>
+                <th>Subdivision</th>
+                <th>Position</th>
+                <th>Status</th>
+                <th>PeoplePartner</th>
+                <th>OutOfOfficeBalance</th>
+                <th>Photo</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for employee in employees %}
+            <tr>
+                <td>{{ employee.id }}</td>
+                <td>{{ employee.fullName }}</td>
+                <td>
+                    {% if employee.roles %}
+                        {{ employee.roles|join(', ') }}
+                    {% endif %}
+                </td>
+                <td>{{ employee.password }}</td>
+                <td>{{ employee.subdivision }}</td>
+                <td>{{ employee.position }}</td>
+                <td>{{ employee.status }}</td>
+                <td>{{ employee.peoplePartner }}</td>
+                <td>{{ employee.outOfOfficeBalance }}</td>
+                <td>{{ employee.photo }}</td>
+                <td>
+                    <a href="{{ path('app_employee_show', {'id': employee.id}) }}">show</a>
+                    <a href="{{ path('app_employee_edit', {'id': employee.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_employee_new') }}">Create new</a>
+{% endblock %}

@@ -140,5 +140,4 @@ class ProjectController extends AbstractController
     
         return new JsonResponse(JsonResponse::HTTP_NO_CONTENT);
     }
-    
 }

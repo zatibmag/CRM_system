@@ -49,6 +49,9 @@ class Project
     #[ORM\Column(length: 255)]
     private ?string $projectName = null;
 
+    #[ORM\ManyToOne(inversedBy: 'currentProjects')]
+    private ?Employee $employee = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -134,6 +137,18 @@ class Project
     public function setProjectName(string $projectName): static
     {
         $this->projectName = $projectName;
+
+        return $this;
+    }
+
+    public function getEmployee(): ?Employee
+    {
+        return $this->employee;
+    }
+
+    public function setEmployee(?Employee $employee): static
+    {
+        $this->employee = $employee;
 
         return $this;
     }
