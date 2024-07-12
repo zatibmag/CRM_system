@@ -107,7 +107,7 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
             ))}
           </select>
         </div>
-        {/* <div>
+        <div>
           <label htmlFor="peoplePartner">People partner:</label>
           <select
             id="peoplePartner"
@@ -116,13 +116,13 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
             required
           >
             <option value="">Select people partner</option>
-            {peoplePartners.map((type) => (
-              <option key={type} value={type}>
-                {type}
+            {employees.map((employee) => (
+              <option key={employee.id} value={employee.id}>
+                {employee.fullName}
               </option>
             ))}
           </select>
-        </div> */}
+        </div>
         <div>
           <label htmlFor="position">Position:</label>
           <select
@@ -171,7 +171,7 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
             ))}
           </select>
         </div>
-        {/* <div>
+        <div>
           <label htmlFor="currentProjects">Current projects:</label>
           <select
             id="currentProject"
@@ -179,14 +179,14 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
             onChange={(e) => setCurrentProject(e.target.value)}
             required
           >
-            <option value="">Select subdivision</option>
-            {currentProjects.map((type) => (
-              <option key={type} value={type}>
-                {type}
+            <option value="">Select project</option>
+            {currentProjects.map((project) => (
+              <option key={project.id} value={project.id}>
+                {project.name}
               </option>
             ))}
           </select>
-        </div> */}
+        </div>
         <div>
           <label htmlFor="outOfOfficeBalance">Out of office Balance:</label>
           <input

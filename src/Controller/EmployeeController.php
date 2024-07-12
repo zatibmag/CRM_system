@@ -89,7 +89,7 @@ class EmployeeController extends AbstractController
         return new JsonResponse(JsonResponse::HTTP_BAD_REQUEST);
     }
 
-    #[Route('/csrf-token-form', name: 'app_csrf_token_form', methods: ['GET'])]
+    #[Route('/csrf-token-form-employee', name: 'app_csrf_token_form_employee', methods: ['GET'])]
     public function getCsrfTokenForm(): JsonResponse
     {
         $csrfToken = $this->csrfTokenManager->getToken('employee_form')->getValue();
