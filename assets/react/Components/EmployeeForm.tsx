@@ -33,6 +33,10 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
   const { employees } = useEmployees();
   const { projects } = useProjects();
 
+  const projectManagers = employees.filter(
+    (employee) => employee.position === "HR_MANAGER"
+  );
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -128,10 +132,10 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
             onChange={(e) => setPeoplePartner(e.target.value)}
             required
           >
-            <option value="">Select people partner</option>
-            {employees.map((employee) => (
-              <option key={employee.id} value={employee.id}>
-                {employee.fullName}
+            <option value="">Select Project Manager</option>
+            {projectManagers.map((manager) => (
+              <option key={manager.id} value={manager.fullName}>
+                {manager.fullName}
               </option>
             ))}
           </select>

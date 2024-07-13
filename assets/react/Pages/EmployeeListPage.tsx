@@ -89,7 +89,7 @@ export function EmployeeListPage(): React.JSX.Element {
           <h2 className="mb-4">Employees</h2>
           <div className="input-group mb-3">
             <EmployeeFilterMenu
-              employees={employees}
+              renderEmployees={employees}
               setFilteredEmployees={setFilteredEmployees}
             />
           </div>

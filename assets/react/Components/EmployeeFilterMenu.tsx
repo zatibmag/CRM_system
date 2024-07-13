@@ -5,27 +5,34 @@ import { useState } from "react";
 import { useStatusChoice } from "../Hooks/useStatusChoice";
 import { usePositions } from "../Hooks/usePositions";
 import { useSubdivisions } from "../Hooks/useSubdivisions";
+import { useEmployees } from "../Hooks/useEmployees";
 
 interface EmployeesFilterMenuProps {
-  employees: any[];
+  renderEmployees: any[];
   setFilteredEmployees: (employees: any[]) => void;
 }
 
 export function EmployeeFilterMenu({
-  employees,
+  renderEmployees,
   setFilteredEmployees,
 }: EmployeesFilterMenuProps) {
   const { statusChoice } = useStatusChoice();
   const { positions } = usePositions();
   const { subdivisions } = useSubdivisions();
+  const { employees } = useEmployees();
 
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedStatus, setSelectedStatus] = useState<string>("");
   const [selectedPosition, setSelectedPosition] = useState<string>("");
   const [selectedSubdivision, setSelectedSubdivision] = useState<string>("");
+  const [selectedHrManager, setSelectedHrManager] = useState<string>("");
+
+  const HrManagers = employees
+    .filter((employee) => employee.position === "HR_MANAGER")
+    .map((manager) => manager.fullName);
 
   const filterEmployees = () => {
-    let filteredEmployees = employees;
+    let filteredEmployees = renderEmployees;
 
     if (searchTerm) {
       filteredEmployees = filteredEmployees.filter((employee) =>
@@ -47,6 +54,11 @@ export function EmployeeFilterMenu({
         (employee) => employee.subdivision === selectedSubdivision
       );
     }
+    if (selectedSubdivision) {
+      filteredEmployees = filteredEmployees.filter(
+        (employee) => employee.peoplePartner === selectedHrManager
+      );
+    }
 
     setFilteredEmployees(filteredEmployees);
   };
@@ -58,7 +70,8 @@ export function EmployeeFilterMenu({
     selectedStatus,
     selectedPosition,
     selectedSubdivision,
-    employees,
+    selectedHrManager,
+    renderEmployees,
   ]);
 
   const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -75,6 +88,12 @@ export function EmployeeFilterMenu({
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     setSelectedSubdivision(event.target.value);
+  };
+
+  const handleHrManagerChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setSelectedHrManager(event.target.value);
   };
 
   return (
@@ -101,6 +120,12 @@ export function EmployeeFilterMenu({
         selectedValue={selectedSubdivision}
         onChange={handleSubdivisionChange}
         placeholder="All subdivisions"
+      />
+      <Filter
+        availableOptions={HrManagers}
+        selectedValue={selectedHrManager}
+        onChange={handleHrManagerChange}
+        placeholder="All people partner"
       />
     </div>
   );
