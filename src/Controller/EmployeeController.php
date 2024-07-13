@@ -75,43 +75,41 @@ class EmployeeController extends AbstractController
     }
 
     #[Route('/new', name: 'app_employee_new', methods: ['POST'])]
-    public function new(Request $request): JsonResponse
+    public function new(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         $csrfToken = new CsrfToken('employee_form', $data['_csrf_token'] ?? '');
-
+    
         if (!$this->csrfTokenManager->isTokenValid($csrfToken)) {
             return new JsonResponse(['error' => 'Invalid CSRF token.'], JsonResponse::HTTP_FORBIDDEN);
         }
-
+    
         $employee = new Employee();
-        $employee->setFullName($data['fullName']);
-        $employee->setPassword($data['password']);
-        $employee->setStatus($data['status']);
-        $employee->setPeoplePartner($data['peoplePartner']);
-        $employee->setPosition($data['position']);
-        $employee->setRoles($data['roles']);
-        $employee->setSubdivision($data['subdivision']);
-        $employee->setOutOfOfficeBalance($data['outOfOfficeBalance']);
-        $employee->setProjects($data['project']);
-        $file = $request->files->get('photo');
-        if ($file) {
-            $newFilename = uniqid().'.'.$file->guessExtension();
-            try {
-                $file->move(
-                    $this->getParameter('photos_directory'),
-                    $newFilename
-                );
-            } catch (FileException $e) {
-                return new JsonResponse(['error' => 'Failed to upload photo.'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        $form = $this->createForm(EmployeeType::class, $employee);
+        $form->submit($data);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $file = $request->files->get('photo');
+            if ($file) {
+                $newFilename = uniqid().'.'.$file->guessExtension();
+                try {
+                    $file->move(
+                        $this->getParameter('photos_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    return new JsonResponse(['error' => 'Failed to upload photo.'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+                }
+                $employee->setPhoto($newFilename);
             }
-            $employee->setPhoto($newFilename);
+    
+            $entityManager->persist($employee);
+            $entityManager->flush();
+    
+            return new JsonResponse(['success' => 'Employee created.'], JsonResponse::HTTP_CREATED);
         }
-
-        $this->entityManager->persist($employee);
-        $this->entityManager->flush();
-
-        return new JsonResponse(['success' => 'Employee created.'], JsonResponse::HTTP_CREATED);
+    
+        return new JsonResponse(['error' => 'Invalid data.'], JsonResponse::HTTP_BAD_REQUEST);
     }
 
     #[Route('/csrf-token-form-employee', name: 'app_csrf_token_form_employee', methods: ['GET'])]

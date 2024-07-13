@@ -36,9 +36,7 @@ export function EmployeeTableHead({ handleSort }: EmployeeTableHeadProps) {
             data={"position"}
           />
         </th>
-        <th>
-          <SortButton name={"Role"} handleSort={handleSort} data={"role"} />
-        </th>
+        <th>Role</th>
         <th>
           <SortButton
             name={"Subdivision"}
@@ -46,13 +44,7 @@ export function EmployeeTableHead({ handleSort }: EmployeeTableHeadProps) {
             data={"subdivision"}
           />
         </th>
-        <th>
-          <SortButton
-            name={"Project"}
-            handleSort={handleSort}
-            data={"project"}
-          />
-        </th>
+        <th>Projects</th>
         <th>
           <SortButton
             name={"OutOfOfficeBalance"}

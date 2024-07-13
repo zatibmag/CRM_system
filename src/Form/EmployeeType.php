@@ -41,6 +41,12 @@ class EmployeeType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false,
             ])
+            ->add('projects', CollectionType::class, [
+                'entry_type' => TextType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+            ])
             ->add('password', TextType::class)
             ->add('subdivision', TextType::class)
             ->add('position', TextType::class)
