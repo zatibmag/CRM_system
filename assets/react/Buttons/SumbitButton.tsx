@@ -1,13 +1,9 @@
 import * as React from "react";
 
 interface SubmitButtonProps {
-  projectId: number;
+  id: number;
 }
 
-export function SubmitButton({ projectId }: SubmitButtonProps) {
-  return (
-    <button type="submit">
-      {projectId ? "Update Project" : "Create Project"}
-    </button>
-  );
+export function SubmitButton({ id }: SubmitButtonProps) {
+  return <button type="submit">{id ? "Update" : "Create"}</button>;
 }

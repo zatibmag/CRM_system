@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Employee;
 use App\Form\EmployeeType;
 use App\Repository\EmployeeRepository;
+use App\Repository\ProjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,15 +15,23 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Csrf\CsrfToken;
 
+
 #[Route('/employees')]
 class EmployeeController extends AbstractController
 {
     private $csrfTokenManager;
+    private $projectRepository;
+    private $entityManager;
 
-    public function __construct(CsrfTokenManagerInterface $csrfTokenManager)
+    public function __construct(CsrfTokenManagerInterface $csrfTokenManager,
+     ProjectRepository $projectRepository,
+     EntityManagerInterface $entityManager)
     {
         $this->csrfTokenManager = $csrfTokenManager;
+        $this->projectRepository = $projectRepository;
+        $this->entityManager = $entityManager;
     }
+
     #[Route('/', name: 'app_employee_index', methods: ['GET'])]
     public function index(EmployeeRepository $employeeRepository): JsonResponse
     {
@@ -66,31 +75,48 @@ class EmployeeController extends AbstractController
     }
 
     #[Route('/new', name: 'app_employee_new', methods: ['POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    public function new(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        
         $csrfToken = new CsrfToken('employee_form', $data['_csrf_token'] ?? '');
+
         if (!$this->csrfTokenManager->isTokenValid($csrfToken)) {
-            return new JsonResponse(JsonResponse::HTTP_FORBIDDEN);
+            return new JsonResponse(['error' => 'Invalid CSRF token.'], JsonResponse::HTTP_FORBIDDEN);
         }
 
         $employee = new Employee();
-        $form = $this->createForm(EmployeeType::class, $employee);
-        $form->submit($data);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($employee);
-            $entityManager->flush();
-
-            return new JsonResponse(JsonResponse::HTTP_CREATED);
+        $employee->setFullName($data['fullName']);
+        $employee->setPassword($data['password']);
+        $employee->setStatus($data['status']);
+        $employee->setPeoplePartner($data['peoplePartner']);
+        $employee->setPosition($data['position']);
+        $employee->setRoles($data['roles']);
+        $employee->setSubdivision($data['subdivision']);
+        $employee->setOutOfOfficeBalance($data['outOfOfficeBalance']);
+        $project = $this->projectRepository->find($data['currentProject']);
+        $employee->addCurrentProject($project);
+        $file = $request->files->get('photo');
+        if ($file) {
+            $newFilename = uniqid().'.'.$file->guessExtension();
+            try {
+                $file->move(
+                    $this->getParameter('photos_directory'),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                return new JsonResponse(['error' => 'Failed to upload photo.'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+            }
+            $employee->setPhoto($newFilename);
         }
 
-        return new JsonResponse(JsonResponse::HTTP_BAD_REQUEST);
+        $this->entityManager->persist($employee);
+        $this->entityManager->flush();
+
+        return new JsonResponse(['success' => 'Employee created.'], JsonResponse::HTTP_CREATED);
     }
 
     #[Route('/csrf-token-form-employee', name: 'app_csrf_token_form_employee', methods: ['GET'])]
-    public function getCsrfTokenForm(): JsonResponse
+    public function getCsrfTokenFormEmployee(): JsonResponse
     {
         $csrfToken = $this->csrfTokenManager->getToken('employee_form')->getValue();
         return new JsonResponse(['csrf_token' => $csrfToken]);

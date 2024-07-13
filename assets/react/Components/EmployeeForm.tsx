@@ -3,12 +3,12 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useStatusChoice } from "../Hooks/useStatusChoice";
 import { SubmitButton } from "../Buttons/SumbitButton";
-import { useCsrfTokenForm } from "../Hooks/useCsrfTokenForm";
 import { useRoles } from "../Hooks/useRoles";
 import { usePositions } from "../Hooks/usePositions";
 import { useSubdivisions } from "../Hooks/useSubdivisions";
 import { useEmployees } from "../Hooks/useEmployees";
 import { useProjects } from "../Hooks/useProjects";
+import { useCsrfTokenFormEmployee } from "../Hooks/useCsrfTokenFormEmployee";
 
 interface EmployeeFormProps {
   employeeId: number;
@@ -16,15 +16,16 @@ interface EmployeeFormProps {
 
 export function EmployeeForm({ employeeId }: EmployeeFormProps) {
   const [fullName, setFullName] = useState("");
-  const [comment, setComment] = useState("");
+  const [password, setPassword] = useState("");
   const [status, setStatus] = useState("");
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState([]);
   const [subdivision, setSubdivision] = useState("");
   const [position, setPosition] = useState("");
   const [outOfOfficeBalance, setOutOfOfficeBalance] = useState("");
   const [currentProject, setCurrentProject] = useState("");
   const [peoplePartner, setPeoplePartner] = useState("");
-  const { csrfTokenForm } = useCsrfTokenForm();
+  const [photo, setPhoto] = useState<File | null>(null);
+  const { csrfTokenForm } = useCsrfTokenFormEmployee();
   const { statusChoice } = useStatusChoice();
   const { roles } = useRoles();
   const { positions } = usePositions();
@@ -38,8 +39,15 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
     try {
       const response = await axios.post("http://127.0.0.1:8000/employees/new", {
         fullName,
-        comment,
+        password,
         status,
+        peoplePartner,
+        position,
+        roles: role,
+        subdivision,
+        currentProject,
+        outOfOfficeBalance,
+        photo,
         _csrf_token: csrfTokenForm,
       });
     } catch (error) {
@@ -55,8 +63,15 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
         `http://127.0.0.1:8000/employees/${employeeId}/edit`,
         {
           fullName,
-          comment,
+          password,
           status,
+          peoplePartner,
+          position,
+          roles: role,
+          subdivision,
+          currentProject,
+          outOfOfficeBalance,
+          photo,
           _csrf_token: csrfTokenForm,
         }
       );
@@ -83,12 +98,13 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
           />
         </div>
         <div>
-          <label htmlFor="comment">Comment:</label>
-          <textarea
-            id="comment"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            rows={3}
+          <label htmlFor="password">Password:</label>
+          <input
+            type="text"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
           />
         </div>
         <div>
@@ -144,7 +160,11 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
           <select
             id="role"
             value={role}
-            onChange={(e) => setRole(e.target.value)}
+            onChange={(e) =>
+              setRole(
+                Array.from(e.target.selectedOptions, (option) => option.value)
+              )
+            }
             required
           >
             <option value="">Select role</option>
@@ -197,8 +217,16 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
             required
           />
         </div>
-        <SubmitButton projectId={employeeId} />
-        {/* CHANGE IT !!!!!!!!!!!!!!!!!!!!!!!!!!! */}
+        <div>
+          <label htmlFor="photo">Photo:</label>
+          <input
+            type="file"
+            id="photo"
+            onChange={(e) => setPhoto(e.target.files?.[0] || null)}
+            required
+          />
+        </div>
+        <SubmitButton id={employeeId} />
       </form>
     </div>
   );

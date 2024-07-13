@@ -261,7 +261,6 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeProject(Project $project): static
     {
         if ($this->projects->removeElement($project)) {
-            // set the owning side to null (unless already changed)
             if ($project->getProjectManager() === $this) {
                 $project->setProjectManager(null);
             }
@@ -291,7 +290,6 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeCurrentProject(Project $currentProject): static
     {
         if ($this->currentProjects->removeElement($currentProject)) {
-            // set the owning side to null (unless already changed)
             if ($currentProject->getEmployee() === $this) {
                 $currentProject->setEmployee(null);
             }

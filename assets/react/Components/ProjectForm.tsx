@@ -147,7 +147,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
             ))}
           </select>
         </div>
-        <SubmitButton projectId={projectId} />
+        <SubmitButton id={projectId} />
       </form>
     </div>
   );
