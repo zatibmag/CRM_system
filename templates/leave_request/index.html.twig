@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LeaveRequest index{% endblock %}
+
+{% block body %}
+    <h1>LeaveRequest index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Employee</th>
+                <th>AbsenceReason</th>
+                <th>StartDate</th>
+                <th>EndDate</th>
+                <th>Comment</th>
+                <th>Status</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for leave_request in leave_requests %}
+            <tr>
+                <td>{{ leave_request.id }}</td>
+                <td>{{ leave_request.employee }}</td>
+                <td>{{ leave_request.absenceReason }}</td>
+                <td>{{ leave_request.startDate ? leave_request.startDate|date('Y-m-d') : '' }}</td>
+                <td>{{ leave_request.endDate ? leave_request.endDate|date('Y-m-d') : '' }}</td>
+                <td>{{ leave_request.comment }}</td>
+                <td>{{ leave_request.status }}</td>
+                <td>
+                    <a href="{{ path('app_leave_request_show', {'id': leave_request.id}) }}">show</a>
+                    <a href="{{ path('app_leave_request_edit', {'id': leave_request.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_leave_request_new') }}">Create new</a>
+{% endblock %}
