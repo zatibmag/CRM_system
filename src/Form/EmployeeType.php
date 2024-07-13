@@ -52,7 +52,7 @@ class EmployeeType extends AbstractType
                 'mapped' => false,
                 'required' => false,
             ])
-            ->add('projects', CollectionType::class, [
+            ->add('roles', CollectionType::class, [
                 'entry_type' => TextType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
