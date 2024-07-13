@@ -37,6 +37,7 @@ class ProjectController extends AbstractController
                 'projectType' => $project->getProjectType(),
                 'startDate' => $project->getStartDate(),
                 'endDate' => $project->getEndDate(),
+                'projectManager' => $project->getProjectManager(),
                 'status' => $project->getStatus(),
                 'comment' => $project->getComment()
             ];

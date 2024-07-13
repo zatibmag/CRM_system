@@ -45,6 +45,9 @@ class Project
     #[ORM\Column(length: 255)]
     private ?string $projectName = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $projectManager = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -118,6 +121,18 @@ class Project
     public function setProjectName(string $projectName): static
     {
         $this->projectName = $projectName;
+
+        return $this;
+    }
+
+    public function getProjectManager(): ?string
+    {
+        return $this->projectManager;
+    }
+
+    public function setProjectManager(?string $projectManager): static
+    {
+        $this->projectManager = $projectManager;
 
         return $this;
     }

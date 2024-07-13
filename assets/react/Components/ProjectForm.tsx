@@ -7,12 +7,6 @@ import { useStatusChoice } from "../Hooks/useStatusChoice";
 import { SubmitButton } from "../Buttons/SumbitButton";
 import { useEmployees } from "../Hooks/useEmployees";
 
-interface Employee {
-  id: number;
-  name: string;
-  position: string;
-}
-
 interface ProjectFormProps {
   projectId: number;
 }
@@ -20,7 +14,7 @@ interface ProjectFormProps {
 export function ProjectForm({ projectId }: ProjectFormProps) {
   const [projectName, setProjectName] = useState("");
   const [projectType, setProjectType] = useState("");
-  const [projectManager, setProjectManager] = useState(""); // State to hold selected project manager's name
+  const [projectManager, setProjectManager] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [comment, setComment] = useState("");
@@ -30,7 +24,6 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
   const { statusChoice } = useStatusChoice();
   const { employees } = useEmployees();
 
-  // Filter employees to get only PROJECT_MANAGER
   const projectManagers = employees.filter(
     (employee) => employee.position === "PROJECT_MANAGER"
   );

@@ -54,11 +54,8 @@ class ProjectType extends AbstractType
                 ],
                 'label' => 'Status',
             ])
-            ->add('projectManager', CollectionType::class, [
-                'entry_type' => TextType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => false,
+            ->add('projectManager', TextType::class, [
+                'label' => 'Project Type',
             ])
             ->add('_csrf_token', HiddenType::class, [
                 'mapped' => false,
