@@ -36,10 +36,6 @@ class Project
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $endDate = null;
 
-    #[ORM\ManyToOne(inversedBy: 'projects')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Employee $projectManager = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $comment = null;
 
@@ -48,9 +44,6 @@ class Project
 
     #[ORM\Column(length: 255)]
     private ?string $projectName = null;
-
-    #[ORM\ManyToOne(inversedBy: 'currentProjects')]
-    private ?Employee $employee = null;
 
     public function getId(): ?int
     {
@@ -93,18 +86,6 @@ class Project
         return $this;
     }
 
-    public function getProjectManager(): ?Employee
-    {
-        return $this->projectManager;
-    }
-
-    public function setProjectManager(?Employee $projectManager): static
-    {
-        $this->projectManager = $projectManager;
-
-        return $this;
-    }
-
     public function getComment(): ?string
     {
         return $this->comment;
@@ -137,18 +118,6 @@ class Project
     public function setProjectName(string $projectName): static
     {
         $this->projectName = $projectName;
-
-        return $this;
-    }
-
-    public function getEmployee(): ?Employee
-    {
-        return $this->employee;
-    }
-
-    public function setEmployee(?Employee $employee): static
-    {
-        $this->employee = $employee;
 
         return $this;
     }

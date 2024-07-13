@@ -19,7 +19,7 @@ export function RenderEmployees({
 
   const handleDelete = async (id: number) => {
     try {
-      await axios.delete(`//127.0.0.1:8000/employee/${id}/delete`, {
+      await axios.delete(`//127.0.0.1:8000/employees/${id}/delete`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -39,7 +39,13 @@ export function RenderEmployees({
           <td>{employee.id}</td>
           <td>{employee.fullName}</td>
           <td>{employee.status}</td>
-          <td>{employee.comment}</td>
+          <td>{employee.peoplePartner}</td>
+          <td>{employee.position}</td>
+          <td>{employee.roles.join(", ")}</td>
+          <td>{employee.subdivision}</td>
+          <td>{employee.projects?.join(", ") ?? "No projects assigned"}</td>
+          <td>{employee.outOfOfficeBalance}</td>
+          <td>{employee.photo}</td>
           <td>
             <UpdateButton
               name={"Update"}

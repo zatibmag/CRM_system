@@ -22,7 +22,7 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
   const [subdivision, setSubdivision] = useState("");
   const [position, setPosition] = useState("");
   const [outOfOfficeBalance, setOutOfOfficeBalance] = useState("");
-  const [currentProject, setCurrentProject] = useState("");
+  const [project, setProject] = useState([]);
   const [peoplePartner, setPeoplePartner] = useState("");
   const [photo, setPhoto] = useState<File | null>(null);
   const { csrfTokenForm } = useCsrfTokenFormEmployee();
@@ -45,7 +45,7 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
         position,
         roles: role,
         subdivision,
-        currentProject,
+        project,
         outOfOfficeBalance,
         photo,
         _csrf_token: csrfTokenForm,
@@ -69,7 +69,7 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
           position,
           roles: role,
           subdivision,
-          currentProject,
+          project,
           outOfOfficeBalance,
           photo,
           _csrf_token: csrfTokenForm,
@@ -79,9 +79,6 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
       console.error(error);
     }
   };
-
-  const peoplePartners = employees;
-  const currentProjects = projects;
 
   return (
     <div>
@@ -192,16 +189,21 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
           </select>
         </div>
         <div>
-          <label htmlFor="currentProjects">Current projects:</label>
+          <label htmlFor="project">Current projects:</label>
           <select
-            id="currentProject"
-            value={currentProject}
-            onChange={(e) => setCurrentProject(e.target.value)}
+            id="project"
+            value={project}
+            onChange={(e) =>
+              setProject(
+                Array.from(e.target.selectedOptions, (option) => option.value)
+              )
+            }
             required
+            multiple
           >
             <option value="">Select project</option>
-            {currentProjects.map((project) => (
-              <option key={project.id} value={project.id}>
+            {projects.map((project) => (
+              <option key={project.id} value={project.name}>
                 {project.name}
               </option>
             ))}
@@ -223,7 +225,6 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
             type="file"
             id="photo"
             onChange={(e) => setPhoto(e.target.files?.[0] || null)}
-            required
           />
         </div>
         <SubmitButton id={employeeId} />

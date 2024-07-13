@@ -30,7 +30,7 @@ class EmployeeType extends AbstractType
         $projects = $this->projectRepository->findAll();
         $projectChoices = [];
         foreach ($projects as $project) {
-            $projectChoices[$project->getName()] = $project->getId();
+            $projectChoices[$project->getProjectName()] = $project->getId();
         }
 
         $builder
@@ -52,10 +52,11 @@ class EmployeeType extends AbstractType
                 'mapped' => false,
                 'required' => false,
             ])
-            ->add('currentProject', ChoiceType::class, [
-                'choices' => $projectChoices,
-                'placeholder' => 'Select project',
-                'required' => true,
+            ->add('projects', CollectionType::class, [
+                'entry_type' => TextType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
             ])
             ->add('_csrf_token', HiddenType::class, [
                 'mapped' => false,

@@ -48,7 +48,7 @@ class EmployeeController extends AbstractController
                 'status' => $employee->getStatus(),
                 'peoplePartner' => $employee->getPeoplePartner(),
                 'outOfOfficeBalance' => $employee->getOutOfOfficeBalance(),
-                'currentProjects' => $employee->getCurrentProjects(),
+                'projects' => $employee->getProjects(),
                 'photo' => $employee->getPhoto()
             ];
         }
@@ -93,8 +93,7 @@ class EmployeeController extends AbstractController
         $employee->setRoles($data['roles']);
         $employee->setSubdivision($data['subdivision']);
         $employee->setOutOfOfficeBalance($data['outOfOfficeBalance']);
-        $project = $this->projectRepository->find($data['currentProject']);
-        $employee->addCurrentProject($project);
+        $employee->setProjects($data['project']);
         $file = $request->files->get('photo');
         if ($file) {
             $newFilename = uniqid().'.'.$file->guessExtension();

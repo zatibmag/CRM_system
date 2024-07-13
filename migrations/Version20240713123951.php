@@ -7,20 +7,20 @@ namespace DoctrineMigrations;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
-final class Version20240710004108 extends AbstractMigration
+final class Version20240713123951 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Return startDate to normal type';
+        return 'Add projects';
     }
 
     public function up(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE project CHANGE start_date start_date DATE NOT NULL');
+        $this->addSql('ALTER TABLE employee ADD projects LONGTEXT DEFAULT NULL COMMENT \'(DC2Type:array)\'');
     }
 
     public function down(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE project CHANGE start_date start_date DATETIME NOT NULL');
+        $this->addSql('ALTER TABLE employee DROP projects');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\EmployeeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -75,23 +76,8 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
-    /**
-     * @var Collection<int, Project>
-     */
-    #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'projectManager')]
-    private Collection $projects;
-
-    /**
-     * @var Collection<int, Project>
-     */
-    #[ORM\OneToMany(targetEntity: Project::class, mappedBy: 'employee')]
-    private Collection $currentProjects;
-
-    public function __construct()
-    {
-        $this->projects = new ArrayCollection();
-        $this->currentProjects = new ArrayCollection();
-    }
+    #[ORM\Column(type: Types::ARRAY, nullable: true)]
+    private ?array $projects = null;
 
     public function getId(): ?int
     {
@@ -128,8 +114,6 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
@@ -240,60 +224,14 @@ class Employee implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Project>
-     */
-    public function getProjects(): Collection
+    public function getProjects(): ?array
     {
         return $this->projects;
     }
 
-    public function addProject(Project $project): static
+    public function setProjects(?array $projects): static
     {
-        if (!$this->projects->contains($project)) {
-            $this->projects->add($project);
-            $project->setProjectManager($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProject(Project $project): static
-    {
-        if ($this->projects->removeElement($project)) {
-            if ($project->getProjectManager() === $this) {
-                $project->setProjectManager(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Project>
-     */
-    public function getCurrentProjects(): Collection
-    {
-        return $this->currentProjects;
-    }
-
-    public function addCurrentProject(Project $currentProject): static
-    {
-        if (!$this->currentProjects->contains($currentProject)) {
-            $this->currentProjects->add($currentProject);
-            $currentProject->setEmployee($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCurrentProject(Project $currentProject): static
-    {
-        if ($this->currentProjects->removeElement($currentProject)) {
-            if ($currentProject->getEmployee() === $this) {
-                $currentProject->setEmployee(null);
-            }
-        }
+        $this->projects = $projects;
 
         return $this;
     }

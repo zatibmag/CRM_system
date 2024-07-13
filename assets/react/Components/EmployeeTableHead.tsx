@@ -24,11 +24,43 @@ export function EmployeeTableHead({ handleSort }: EmployeeTableHeadProps) {
         </th>
         <th>
           <SortButton
-            name={"Comment"}
+            name={"PeoplePartner"}
             handleSort={handleSort}
-            data={"comment"}
+            data={"peoplePartner"}
           />
         </th>
+        <th>
+          <SortButton
+            name={"Position"}
+            handleSort={handleSort}
+            data={"position"}
+          />
+        </th>
+        <th>
+          <SortButton name={"Role"} handleSort={handleSort} data={"role"} />
+        </th>
+        <th>
+          <SortButton
+            name={"Subdivision"}
+            handleSort={handleSort}
+            data={"subdivision"}
+          />
+        </th>
+        <th>
+          <SortButton
+            name={"Project"}
+            handleSort={handleSort}
+            data={"project"}
+          />
+        </th>
+        <th>
+          <SortButton
+            name={"OutOfOfficeBalance"}
+            handleSort={handleSort}
+            data={"outOfOfficeBalance"}
+          />
+        </th>
+        <th>Photo</th>
         <th>Actions</th>
       </tr>
     </thead>
