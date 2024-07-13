@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -53,10 +54,11 @@ class ProjectType extends AbstractType
                 ],
                 'label' => 'Status',
             ])
-            ->add('projectManager', EntityType::class, [
-                'class' => Employee::class,
-                'choice_label' => 'fullName',
-                'label' => 'Project Manager',
+            ->add('projectManager', CollectionType::class, [
+                'entry_type' => TextType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
             ])
             ->add('_csrf_token', HiddenType::class, [
                 'mapped' => false,

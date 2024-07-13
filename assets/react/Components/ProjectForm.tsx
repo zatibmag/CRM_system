@@ -5,6 +5,13 @@ import { useProjectType } from "../Hooks/useProjectTypes";
 import { useCsrfTokenForm } from "../Hooks/useCsrfTokenForm";
 import { useStatusChoice } from "../Hooks/useStatusChoice";
 import { SubmitButton } from "../Buttons/SumbitButton";
+import { useEmployees } from "../Hooks/useEmployees";
+
+interface Employee {
+  id: number;
+  name: string;
+  position: string;
+}
 
 interface ProjectFormProps {
   projectId: number;
@@ -13,7 +20,7 @@ interface ProjectFormProps {
 export function ProjectForm({ projectId }: ProjectFormProps) {
   const [projectName, setProjectName] = useState("");
   const [projectType, setProjectType] = useState("");
-  const [projectManager, setProjectManager] = useState("");
+  const [projectManager, setProjectManager] = useState(""); // State to hold selected project manager's name
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [comment, setComment] = useState("");
@@ -21,6 +28,12 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
   const { csrfTokenForm } = useCsrfTokenForm();
   const { availableProjectTypes } = useProjectType();
   const { statusChoice } = useStatusChoice();
+  const { employees } = useEmployees();
+
+  // Filter employees to get only PROJECT_MANAGER
+  const projectManagers = employees.filter(
+    (employee) => employee.position === "PROJECT_MANAGER"
+  );
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -114,13 +127,19 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
         </div>
         <div>
           <label htmlFor="projectManager">Project Manager:</label>
-          <input
-            type="number"
+          <select
             id="projectManager"
             value={projectManager}
             onChange={(e) => setProjectManager(e.target.value)}
             required
-          />
+          >
+            <option value="">Select Project Manager</option>
+            {projectManagers.map((manager) => (
+              <option key={manager.id} value={manager.fullName}>
+                {manager.fullName}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
           <label htmlFor="comment">Comment:</label>

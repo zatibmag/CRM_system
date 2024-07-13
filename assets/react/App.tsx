@@ -4,8 +4,8 @@ import { EmployeeListPage } from "./Pages/EmployeeListPage";
 export function App(): React.JSX.Element {
   return (
     <div>
-      {/* <ProjectListPage /> */}
-      <EmployeeListPage />
+      <ProjectListPage />
+      {/* <EmployeeListPage /> */}
     </div>
   );
 }
