@@ -49,6 +49,7 @@ export function RenderLeaveRequests({
               : "-"}
           </td>
           <td>{leaveRequest.employee}</td>
+          <td>{leaveRequest.absenceReason}</td>
           <td>{leaveRequest.status}</td>
           <td>{leaveRequest.comment}</td>
           <td>{leaveRequest.reviewerComment}</td>

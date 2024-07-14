@@ -39,6 +39,13 @@ export function LeaveRequestTableHead({
           />
         </th>
         <th>
+          <SortButton
+            name={"Absence reason"}
+            handleSort={handleSort}
+            data={"absenceReason"}
+          />
+        </th>
+        <th>
           <SortButton name={"Status"} handleSort={handleSort} data={"status"} />
         </th>
         <th>
