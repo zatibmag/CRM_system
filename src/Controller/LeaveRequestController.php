@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Csrf\CsrfToken;
@@ -24,29 +24,29 @@ class LeaveRequestController extends AbstractController
         $this->csrfTokenManager = $csrfTokenManager;
     }
 
-    #[Route('/', name: 'app_project_index', methods: ['GET'])]
-    public function index(ProjectRepository $projectRepository): JsonResponse
+    #[Route('/', name: 'app_leave_request_index', methods: ['GET'])]
+    public function index(LeaveRequestRepository $leaveRequestRepository): JsonResponse
     {
-        $projects = $projectRepository->findAll();
+        $leaveRequests = $leaveRequestRepository->findAll();
 
-        $projectsArray = [];
-        foreach ($projects as $project) {
-            $projectsArray[] = [
-                'id' => $project->getId(),
-                'leaveRequestName' => $project->getProjectName(),
-                'leaveRequestEmployee' => $project->getProjectType(),
-                'startDate' => $project->getStartDate(),
-                'endDate' => $project->getEndDate(),
-                'employee' => $project->getEmployee(),
-                'status' => $project->getStatus(),
-                'comment' => $project->getComment()
+        $leaveRequestsArray = [];
+        foreach ($leaveRequests as $leaveRequest) {
+            $leaveRequestsArray[] = [
+                'id' => $leaveRequest->getId(),
+                'name' => $leaveRequest->getName(),
+                'employee' => $leaveRequest->getEmployee(),
+                'absenceReason' => $leaveRequest->getAbsenceReason(),
+                'startDate' => $leaveRequest->getStartDate()->format('Y-m-d'),
+                'endDate' => $leaveRequest->getEndDate()->format('Y-m-d'),
+                'status' => $leaveRequest->getStatus(),
+                'comment' => $leaveRequest->getComment()
             ];
         }
 
-        return new JsonResponse($projectsArray);
+        return new JsonResponse($leaveRequestsArray);
     }
 
-    #[Route('/absence-reason', name: 'absenceReason', methods: ['GET'])]
+    #[Route('/absence-reason', name: 'absenceReason', methods: ['POST'])]
     public function absenceReason(): JsonResponse
     {
         return new JsonResponse(LeaveRequest::ABSENCE_REASON);
@@ -56,10 +56,10 @@ class LeaveRequestController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        
+
         $csrfToken = new CsrfToken('leave_request_form', $data['_csrf_token'] ?? '');
         if (!$this->csrfTokenManager->isTokenValid($csrfToken)) {
-            return new JsonResponse(JsonResponse::HTTP_FORBIDDEN);
+            return new JsonResponse(['message' => 'Invalid CSRF token'], JsonResponse::HTTP_FORBIDDEN);
         }
 
         $leaveRequest = new LeaveRequest();
@@ -70,20 +70,20 @@ class LeaveRequestController extends AbstractController
             $entityManager->persist($leaveRequest);
             $entityManager->flush();
 
-            return new JsonResponse(JsonResponse::HTTP_CREATED);
+            return new JsonResponse(['message' => 'Leave request created'], JsonResponse::HTTP_CREATED);
         }
 
-        return new JsonResponse(JsonResponse::HTTP_BAD_REQUEST);
+        return new JsonResponse(['message' => 'Invalid form data'], JsonResponse::HTTP_BAD_REQUEST);
     }
 
-    #[Route('/csrf-token-form-leavel-request', name: 'app_csrf_token_form_leave_request', methods: ['GET'])]
+    #[Route('/csrf-token-form-leave-request', name: 'app_csrf_token_form_leave_request', methods: ['GET'])]
     public function getCsrfTokenForm(): JsonResponse
     {
         $csrfToken = $this->csrfTokenManager->getToken('leave_request_form')->getValue();
         return new JsonResponse(['csrf_token' => $csrfToken]);
     }
 
-    #[Route('/csrf-token-delete-leavel-request', name: 'app_csrf_token_delete_leave_request', methods: ['GET'])]
+    #[Route('/csrf-token-delete-leave-request', name: 'app_csrf_token_delete_leave_request', methods: ['GET'])]
     public function getCsrfTokenDelete(): JsonResponse
     {
         $csrfToken = $this->csrfTokenManager->getToken('delete_leave_request')->getValue();
@@ -105,7 +105,7 @@ class LeaveRequestController extends AbstractController
 
         $csrfToken = new CsrfToken('leave_request_form', $data['_csrf_token'] ?? '');
         if (!$this->csrfTokenManager->isTokenValid($csrfToken)) {
-            return new JsonResponse(JsonResponse::HTTP_FORBIDDEN);
+            return new JsonResponse(['message' => 'Invalid CSRF token'], JsonResponse::HTTP_FORBIDDEN);
         }
 
         $form = $this->createForm(LeaveRequestType::class, $leaveRequest);
@@ -114,24 +114,25 @@ class LeaveRequestController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return new JsonResponse(JsonResponse::HTTP_OK);
+            return new JsonResponse(['message' => 'Leave request updated'], JsonResponse::HTTP_OK);
         }
 
-        return new JsonResponse(JsonResponse::HTTP_BAD_REQUEST);
+        return new JsonResponse(['message' => 'Invalid form data'], JsonResponse::HTTP_BAD_REQUEST);
     }
 
     #[Route('/{id}/delete', name: 'app_leave_request_delete', methods: ['DELETE'])]
     public function delete(Request $request, LeaveRequest $leaveRequest, EntityManagerInterface $entityManager): JsonResponse
     {
-        $csrfToken = $this->csrfTokenManager->getToken('delete'.$leaveRequest->getId())->getValue();
-    
-        if (!$this->isCsrfTokenValid('delete'.$leaveRequest->getId(), $csrfToken)) {
-            return new JsonResponse(JsonResponse::HTTP_FORBIDDEN);
+        $data = json_decode($request->getContent(), true);
+
+        $csrfToken = new CsrfToken('delete_leave_request', $data['_csrf_token'] ?? '');
+        if (!$this->csrfTokenManager->isTokenValid($csrfToken)) {
+            return new JsonResponse(['message' => 'Invalid CSRF token'], JsonResponse::HTTP_FORBIDDEN);
         }
-    
+
         $entityManager->remove($leaveRequest);
         $entityManager->flush();
-    
-        return new JsonResponse(JsonResponse::HTTP_NO_CONTENT);
+
+        return new JsonResponse(['message' => 'Leave request deleted'], JsonResponse::HTTP_NO_CONTENT);
     }
 }

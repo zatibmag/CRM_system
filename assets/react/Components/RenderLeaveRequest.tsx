@@ -19,7 +19,7 @@ export function RenderLeaveRequests({
 
   const handleDelete = async (id: number) => {
     try {
-      await axios.delete(`//127.0.0.1:8000/leave-request/${id}/delete`, {
+      await axios.delete(`http://127.0.0.1:8000/leave-request/${id}/delete`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -32,6 +32,7 @@ export function RenderLeaveRequests({
     }
   };
 
+  console.log(filteredLeaveRequests);
   return (
     <tbody>
       {filteredLeaveRequests.map((leaveRequest) => (
@@ -40,12 +41,12 @@ export function RenderLeaveRequests({
           <td>{leaveRequest.name}</td>
           <td>
             {leaveRequest.startDate
-              ? new Date(leaveRequest.startDate.date).toLocaleDateString()
+              ? new Date(leaveRequest.startDate).toLocaleDateString()
               : "-"}
           </td>
           <td>
             {leaveRequest.endDate
-              ? new Date(leaveRequest.endDate.date).toLocaleDateString()
+              ? new Date(leaveRequest.endDate).toLocaleDateString()
               : "-"}
           </td>
           <td>{leaveRequest.employee}</td>

@@ -2,7 +2,6 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useCsrfTokenFormLeaveRequest } from "../Hooks/useCsrfTokenFormLeaveRequest";
-import { useStatusChoice } from "../Hooks/useStatusChoice";
 import { SubmitButton } from "../Buttons/SumbitButton";
 import { useEmployees } from "../Hooks/useEmployees";
 import { useAbsenceReason } from "../Hooks/useAbscenceReason";
@@ -12,15 +11,13 @@ interface LeaveRequestFormProps {
 }
 
 export function LeaveRequestForm({ leaveRequestId }: LeaveRequestFormProps) {
-  const [leaveRequestName, setLeaveRequestName] = useState("");
+  const [name, setName] = useState("");
   const [leaveRequestEmployee, setLeaveRequestEmployee] = useState("");
   const [absenceReason, setAbsenceReason] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [comment, setComment] = useState("");
-  const [status, setStatus] = useState("");
   const { csrfTokenForm } = useCsrfTokenFormLeaveRequest();
-  const { statusChoice } = useStatusChoice();
   const { employees } = useEmployees();
   const { absenceReasons } = useAbsenceReason();
 
@@ -35,13 +32,13 @@ export function LeaveRequestForm({ leaveRequestId }: LeaveRequestFormProps) {
       const response = await axios.post(
         "http://127.0.0.1:8000/leave-request/new",
         {
-          leaveRequestName,
+          name,
           startDate,
           endDate,
-          leaveRequestEmployee,
+          employee: leaveRequestEmployee,
           absenceReason,
           comment,
-          status,
+          status: "New",
           _csrf_token: csrfTokenForm,
         }
       );
@@ -57,13 +54,13 @@ export function LeaveRequestForm({ leaveRequestId }: LeaveRequestFormProps) {
       const response = await axios.put(
         `http://127.0.0.1:8000/leave-request/${leaveRequestId}/edit`,
         {
-          leaveRequestName,
+          name,
           startDate,
           endDate,
           leaveRequestEmployee,
           absenceReason,
           comment,
-          status,
+          status: "New",
           _csrf_token: csrfTokenForm,
         }
       );
@@ -79,12 +76,12 @@ export function LeaveRequestForm({ leaveRequestId }: LeaveRequestFormProps) {
       </h2>
       <form onSubmit={leaveRequestId ? handleUpdate : handleSubmit}>
         <div>
-          <label htmlFor="leaveRequestName">Leave Request Name:</label>
+          <label htmlFor="name">Leave Request Name:</label>
           <input
             type="text"
-            id="leaveRequestName"
-            value={leaveRequestName}
-            onChange={(e) => setLeaveRequestName(e.target.value)}
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required
           />
         </div>
@@ -147,22 +144,6 @@ export function LeaveRequestForm({ leaveRequestId }: LeaveRequestFormProps) {
             onChange={(e) => setComment(e.target.value)}
             rows={3}
           />
-        </div>
-        <div>
-          <label htmlFor="status">Status:</label>
-          <select
-            id="status"
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-            required
-          >
-            <option value="">Select status</option>
-            {statusChoice.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
         </div>
         <SubmitButton id={leaveRequestId} />
       </form>

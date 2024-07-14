@@ -10,19 +10,28 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class LeaveRequestType extends AbstractType
 {
+    private $csrfTokenManager;
+
+    public function __construct(CsrfTokenManagerInterface $csrfTokenManager)
+    {
+        $this->csrfTokenManager = $csrfTokenManager;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('leaveRequestName', TextType::class, [
+            ->add('name', TextType::class, [
                 'label' => 'Leave Request Name',
             ])
-            ->add('leaveRequestEmployee', TextType::class, [
+            ->add('employee', TextType::class, [
                 'label' => 'Leave Request Employee',
             ])
-            ->add('absenceReason', TextareaType::class, [
+            ->add('absenceReason', TextType::class, [
                 'label' => 'Absence Reason',
             ])
             ->add('startDate', DateType::class, [
@@ -36,19 +45,13 @@ class LeaveRequestType extends AbstractType
             ->add('comment', TextareaType::class, [
                 'label' => 'Comment',
             ])
-            ->add('status', ChoiceType::class, [
-                'choices' => [
-                    'Pending' => 'Pending',
-                    'Approved' => 'Approved',
-                    'Rejected' => 'Rejected',
-                ],
+            ->add('status', TextType::class, [
                 'label' => 'Status',
             ])
             ->add('_csrf_token', HiddenType::class, [
                 'mapped' => false,
                 'data' => $this->csrfTokenManager->getToken('leave_request_form')->getValue()
             ]);
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
