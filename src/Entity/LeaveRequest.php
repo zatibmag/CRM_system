@@ -43,6 +43,9 @@ class LeaveRequest
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $reviewerComment = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -128,6 +131,18 @@ class LeaveRequest
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getReviewerComment(): ?string
+    {
+        return $this->reviewerComment;
+    }
+
+    public function setReviewerComment(?string $reviewerComment): static
+    {
+        $this->reviewerComment = $reviewerComment;
 
         return $this;
     }

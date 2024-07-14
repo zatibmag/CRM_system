@@ -18,7 +18,8 @@ export function LeaveRequestListPage(): React.JSX.Element {
     direction: "ascending" | "descending";
   }>({ key: "", direction: "ascending" });
 
-  const [filteredLeaveRequests, setFilteredLeaveRequests] = useState<any[]>([]);
+  const [filteredLeaveRequests, setFilteredLeaveRequests] =
+    useState<any[]>(leaveRequests);
 
   const handleSort = (key: string) => {
     const newDirection =
@@ -34,7 +35,7 @@ export function LeaveRequestListPage(): React.JSX.Element {
 
   useEffect(() => {
     if (sortConfig.key !== "") {
-      const sortedLeaveRequests = [...leaveRequests].sort((a, b) => {
+      const sortedProjects = [...filteredLeaveRequests].sort((a, b) => {
         const valueA = getValueForSorting(a, sortConfig.key);
         const valueB = getValueForSorting(b, sortConfig.key);
 
@@ -44,9 +45,9 @@ export function LeaveRequestListPage(): React.JSX.Element {
           return compareValues(valueB, valueA);
         }
       });
-      setFilteredLeaveRequests(sortedLeaveRequests);
+      setFilteredLeaveRequests(sortedProjects);
     }
-  }, [sortConfig, leaveRequests]);
+  }, [sortConfig, filteredLeaveRequests]);
 
   const getValueForSorting = (item: any, key: string) => {
     const keys = key.split(".");

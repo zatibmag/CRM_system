@@ -38,6 +38,7 @@ export function LeaveRequestForm({ leaveRequestId }: LeaveRequestFormProps) {
           employee: leaveRequestEmployee,
           absenceReason,
           comment,
+          reviewerComment: "Not yet reviewed",
           status: "New",
           _csrf_token: csrfTokenForm,
         }
@@ -57,9 +58,10 @@ export function LeaveRequestForm({ leaveRequestId }: LeaveRequestFormProps) {
           name,
           startDate,
           endDate,
-          leaveRequestEmployee,
+          employee: leaveRequestEmployee,
           absenceReason,
           comment,
+          reviewerComment: "Not yet reviewed",
           status: "New",
           _csrf_token: csrfTokenForm,
         }

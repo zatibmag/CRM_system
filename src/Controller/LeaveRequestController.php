@@ -39,7 +39,8 @@ class LeaveRequestController extends AbstractController
                 'startDate' => $leaveRequest->getStartDate()->format('Y-m-d'),
                 'endDate' => $leaveRequest->getEndDate()->format('Y-m-d'),
                 'status' => $leaveRequest->getStatus(),
-                'comment' => $leaveRequest->getComment()
+                'comment' => $leaveRequest->getComment(),
+                'reviewerComment' => $leaveRequest->getReviewerComment()
             ];
         }
 

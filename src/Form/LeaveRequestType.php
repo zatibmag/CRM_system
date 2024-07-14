@@ -45,6 +45,9 @@ class LeaveRequestType extends AbstractType
             ->add('comment', TextareaType::class, [
                 'label' => 'Comment',
             ])
+            ->add('reviewerComment', TextareaType::class, [
+                'label' => 'Comment',
+            ])
             ->add('status', TextType::class, [
                 'label' => 'Status',
             ])

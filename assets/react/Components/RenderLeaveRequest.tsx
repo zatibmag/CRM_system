@@ -1,6 +1,6 @@
 import * as React from "react";
 import axios from "axios";
-import { useCsrfTokenDelete } from "../Hooks/useCsrfTokenDelete";
+import { useCsrfTokenDeleteLeaveRequest } from "../Hooks/useCsrfTokenDeleteLeaveRequest";
 import { DeleteButton } from "../Buttons/DeleteButton";
 import { UpdateButton } from "../Buttons/UpdateButton";
 
@@ -15,7 +15,7 @@ export function RenderLeaveRequests({
   setShowForm,
   setLeaveRequestId,
 }: RenderLeaveRequestsProps) {
-  const { csrfTokenDelete } = useCsrfTokenDelete();
+  const { csrfTokenDelete } = useCsrfTokenDeleteLeaveRequest();
 
   const handleDelete = async (id: number) => {
     try {
@@ -32,7 +32,6 @@ export function RenderLeaveRequests({
     }
   };
 
-  console.log(filteredLeaveRequests);
   return (
     <tbody>
       {filteredLeaveRequests.map((leaveRequest) => (
@@ -52,6 +51,7 @@ export function RenderLeaveRequests({
           <td>{leaveRequest.employee}</td>
           <td>{leaveRequest.status}</td>
           <td>{leaveRequest.comment}</td>
+          <td>{leaveRequest.reviewerComment}</td>
           <td>
             <UpdateButton
               name={"Update"}

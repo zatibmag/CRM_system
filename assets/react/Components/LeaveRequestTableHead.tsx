@@ -21,21 +21,21 @@ export function LeaveRequestTableHead({
           <SortButton
             name={"Start Date"}
             handleSort={handleSort}
-            data={"startDate.date"}
+            data={"startDate"}
           />
         </th>
         <th>
           <SortButton
             name={"End Date"}
             handleSort={handleSort}
-            data={"endDate.date"}
+            data={"endDate"}
           />
         </th>
         <th>
           <SortButton
-            name={"EmployeeFullName"}
+            name={"Employee"}
             handleSort={handleSort}
-            data={"employeeFullName"}
+            data={"employee"}
           />
         </th>
         <th>
@@ -48,6 +48,7 @@ export function LeaveRequestTableHead({
             data={"comment"}
           />
         </th>
+        <th>Reviewer comment</th>
         <th>Actions</th>
       </tr>
     </thead>
