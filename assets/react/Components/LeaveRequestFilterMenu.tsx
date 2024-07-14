@@ -14,10 +14,10 @@ export function LeaveRequestFilterMenu({
   leaveRequests,
   setFilteredLeaveRequests,
 }: LeaveRequestFilterMenuProps) {
-  const { statusChoice } = useStatusChoice();
+  const statusChoice = ["New", "Approved", "Rejected"];
   const { employees } = useEmployees();
 
-  const employeesFullName = employees.map((manager) => manager.fullName);
+  const employeesFullName = employees.map((employee) => employee.fullName);
 
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedStatus, setSelectedStatus] = useState<string>("");
@@ -38,7 +38,7 @@ export function LeaveRequestFilterMenu({
     }
     if (selectedEmployee) {
       filteredLeaveRequests = filteredLeaveRequests.filter(
-        (leaveRequest) => leaveRequest.Employee === selectedEmployee
+        (leaveRequest) => leaveRequest.employee === selectedEmployee
       );
     }
 
