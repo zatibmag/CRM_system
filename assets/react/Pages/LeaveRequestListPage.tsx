@@ -81,7 +81,6 @@ export function LeaveRequestListPage(): React.JSX.Element {
     );
   }
 
-  console.log("List:", leaveRequests);
   return (
     <>
       {showForm ? (

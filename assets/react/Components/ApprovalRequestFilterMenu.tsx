@@ -3,7 +3,6 @@ import { Filter } from "./Filter";
 import { Search } from "./Search";
 import { useState } from "react";
 import { useEmployees } from "../Hooks/useEmployees";
-import { useAbsenceReason } from "../Hooks/useAbscenceReason";
 
 interface ApprovalRequestFilterMenuProps {
   approvalRequests: any[];
@@ -16,15 +15,12 @@ export function ApprovalRequestFilterMenu({
 }: ApprovalRequestFilterMenuProps) {
   const statusChoice = ["New", "Approved", "Rejected"];
   const { employees } = useEmployees();
-  const { absenceReasons } = useAbsenceReason();
 
   const employeesFullName = employees.map((employee) => employee.fullName);
 
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedStatus, setSelectedStatus] = useState<string>("");
   const [selectedEmployee, setSelectedEmployee] = useState<string>("");
-  const [selectedAbsenceReason, setSelectedAbsenceReason] =
-    useState<string>("");
 
   const filterApprovalRequests = () => {
     let filteredApprovalRequests = approvalRequests;
@@ -42,13 +38,7 @@ export function ApprovalRequestFilterMenu({
     }
     if (selectedEmployee) {
       filteredApprovalRequests = filteredApprovalRequests.filter(
-        (approvalRequest) => approvalRequest.employee === selectedEmployee
-      );
-    }
-    if (selectedAbsenceReason) {
-      filteredApprovalRequests = filteredApprovalRequests.filter(
-        (approvalRequest) =>
-          approvalRequest.absenceReason === selectedAbsenceReason
+        (approvalRequest) => approvalRequest.approver === selectedEmployee
       );
     }
 
@@ -57,7 +47,7 @@ export function ApprovalRequestFilterMenu({
 
   React.useEffect(() => {
     filterApprovalRequests();
-  }, [searchTerm, selectedStatus, selectedEmployee, selectedAbsenceReason]);
+  }, [searchTerm, selectedStatus, selectedEmployee]);
 
   const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedStatus(event.target.value);
@@ -67,12 +57,6 @@ export function ApprovalRequestFilterMenu({
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     setSelectedEmployee(event.target.value);
-  };
-
-  const handleAbsenceReasonChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setSelectedAbsenceReason(event.target.value);
   };
 
   return (
@@ -86,13 +70,7 @@ export function ApprovalRequestFilterMenu({
         availableOptions={employeesFullName}
         selectedValue={selectedEmployee}
         onChange={handleEmployeeChange}
-        placeholder="All employees"
-      />
-      <Filter
-        availableOptions={absenceReasons}
-        selectedValue={selectedAbsenceReason}
-        onChange={handleAbsenceReasonChange}
-        placeholder="All absence reasons"
+        placeholder="All approvers"
       />
       <Filter
         availableOptions={statusChoice}

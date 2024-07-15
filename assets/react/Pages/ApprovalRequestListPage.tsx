@@ -37,17 +37,19 @@ export function ApprovalRequestListPage(): React.JSX.Element {
 
   useEffect(() => {
     if (sortConfig.key !== "") {
-      const sortedProjects = [...filteredApprovalRequests].sort((a, b) => {
-        const valueA = getValueForSorting(a, sortConfig.key);
-        const valueB = getValueForSorting(b, sortConfig.key);
+      const sortedApprovalRequests = [...filteredApprovalRequests].sort(
+        (a, b) => {
+          const valueA = getValueForSorting(a, sortConfig.key);
+          const valueB = getValueForSorting(b, sortConfig.key);
 
-        if (sortConfig.direction === "ascending") {
-          return compareValues(valueA, valueB);
-        } else {
-          return compareValues(valueB, valueA);
+          if (sortConfig.direction === "ascending") {
+            return compareValues(valueA, valueB);
+          } else {
+            return compareValues(valueB, valueA);
+          }
         }
-      });
-      setFilteredApprovalRequests(sortedProjects);
+      );
+      setFilteredApprovalRequests(sortedApprovalRequests);
     }
   }, [sortConfig, filteredApprovalRequests]);
 
@@ -83,7 +85,6 @@ export function ApprovalRequestListPage(): React.JSX.Element {
     );
   }
 
-  console.log("List:", approvalRequests);
   return (
     <>
       {showForm ? (
