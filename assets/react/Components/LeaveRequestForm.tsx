@@ -74,83 +74,109 @@ export function LeaveRequestForm({
   };
 
   return (
-    <div>
-      <h2>
-        {leaveRequestId ? "Update Leave Request" : "Create New Leave Request"}
-      </h2>
-      <form onSubmit={leaveRequestId ? handleUpdate : handleSubmit}>
-        <div>
-          <label htmlFor="name">Leave Request Name:</label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
+    <div className="container mt-4 w-50">
+      <div className="row justify-content-center">
+        <div className="col-10">
+          <div className="border p-4">
+            <h2 className="text-center">
+              {leaveRequestId
+                ? "Update Leave Request"
+                : "Create New Leave Request"}
+            </h2>
+            <form onSubmit={leaveRequestId ? handleUpdate : handleSubmit}>
+              <div className="mb-3">
+                <label htmlFor="name" className="form-label">
+                  Leave Request Name:
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="startDate" className="form-label">
+                  Start Date:
+                </label>
+                <input
+                  type="date"
+                  className="form-control"
+                  id="startDate"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="endDate" className="form-label">
+                  End Date:
+                </label>
+                <input
+                  type="date"
+                  className="form-control"
+                  id="endDate"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="leaveRequestEmployee" className="form-label">
+                  Employee:
+                </label>
+                <select
+                  id="leaveRequestEmployee"
+                  className="form-select"
+                  value={leaveRequestEmployee}
+                  onChange={(e) => setLeaveRequestEmployee(e.target.value)}
+                  required
+                >
+                  <option value="">Select Employee</option>
+                  {employees.map((employee) => (
+                    <option key={employee.id} value={employee.fullName}>
+                      {employee.fullName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="absenceReason" className="form-label">
+                  Absence Reason:
+                </label>
+                <select
+                  id="absenceReason"
+                  className="form-select"
+                  value={absenceReason}
+                  onChange={(e) => setAbsenceReason(e.target.value)}
+                  required
+                >
+                  <option value="">Select absence reason</option>
+                  {absenceReasons.map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="comment" className="form-label">
+                  Comment:
+                </label>
+                <textarea
+                  id="comment"
+                  className="form-control"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  rows={3}
+                />
+              </div>
+              <SubmitButton id={leaveRequestId} />
+            </form>
+          </div>
         </div>
-        <div>
-          <label htmlFor="startDate">Start Date:</label>
-          <input
-            type="date"
-            id="startDate"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="endDate">End Date:</label>
-          <input
-            type="date"
-            id="endDate"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="leaveRequestEmployee">Employee:</label>
-          <select
-            id="leaveRequestEmployee"
-            value={leaveRequestEmployee}
-            onChange={(e) => setLeaveRequestEmployee(e.target.value)}
-            required
-          >
-            <option value="">Select Employee</option>
-            {employees.map((employee) => (
-              <option key={employee.id} value={employee.fullName}>
-                {employee.fullName}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="absenceReason">Absence Reason:</label>
-          <select
-            id="absenceReason"
-            value={absenceReason}
-            onChange={(e) => setAbsenceReason(e.target.value)}
-            required
-          >
-            <option value="">Select absence reason</option>
-            {absenceReasons.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="comment">Comment:</label>
-          <textarea
-            id="comment"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            rows={3}
-          />
-        </div>
-        <SubmitButton id={leaveRequestId} />
-      </form>
+      </div>
     </div>
   );
 }

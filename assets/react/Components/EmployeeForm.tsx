@@ -88,146 +88,187 @@ export function EmployeeForm({ employeeId, setShowForm }: EmployeeFormProps) {
   };
 
   return (
-    <div>
-      <h2>{employeeId ? "Update employee" : "Create New employee"}</h2>
-      <form onSubmit={employeeId ? handleUpdate : handleSubmit}>
-        <div>
-          <label htmlFor="fullName">Full Name:</label>
-          <input
-            type="text"
-            id="fullName"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            required
-          />
+    <div className="container mt-4 w-50">
+      <div className="row justify-content-center">
+        <div className="col-10">
+          <div className="border p-4">
+            <h2 className="text-center">
+              {employeeId ? "Update employee" : "Create New employee"}
+            </h2>
+            <form onSubmit={employeeId ? handleUpdate : handleSubmit}>
+              <div className="mb-3">
+                <label htmlFor="fullName" className="form-label">
+                  Full Name:
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="fullName"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="password" className="form-label">
+                  Password:
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="status" className="form-label">
+                  Status:
+                </label>
+                <select
+                  id="status"
+                  className="form-select"
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                  required
+                >
+                  <option value="">Select status</option>
+                  {statusChoice.map((status) => (
+                    <option key={status} value={status}>
+                      {status}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="peoplePartner" className="form-label">
+                  People partner:
+                </label>
+                <select
+                  id="peoplePartner"
+                  className="form-select"
+                  value={peoplePartner}
+                  onChange={(e) => setPeoplePartner(e.target.value)}
+                  required
+                >
+                  <option value="">Select Project Manager</option>
+                  {projectManagers.map((manager) => (
+                    <option key={manager.id} value={manager.fullName}>
+                      {manager.fullName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="position" className="form-label">
+                  Position:
+                </label>
+                <select
+                  id="position"
+                  className="form-select"
+                  value={position}
+                  onChange={(e) => setPosition(e.target.value)}
+                  required
+                >
+                  <option value="">Select position</option>
+                  {positions.map((position) => (
+                    <option key={position} value={position}>
+                      {position}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="role" className="form-label">
+                  Role:
+                </label>
+                <select
+                  id="role"
+                  className="form-select"
+                  value={role}
+                  onChange={(e) =>
+                    setRole(
+                      Array.from(
+                        e.target.selectedOptions,
+                        (option) => option.value
+                      )
+                    )
+                  }
+                  required
+                >
+                  <option value="">Select role</option>
+                  {roles.map((role) => (
+                    <option key={role} value={role}>
+                      {role}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="subdivision" className="form-label">
+                  Subdivision:
+                </label>
+                <select
+                  id="subdivision"
+                  className="form-select"
+                  value={subdivision}
+                  onChange={(e) => setSubdivision(e.target.value)}
+                  required
+                >
+                  <option value="">Select subdivision</option>
+                  {subdivisions.map((subdivisions) => (
+                    <option key={subdivisions} value={subdivisions}>
+                      {subdivisions}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="project" className="form-label">
+                  Current projects:
+                </label>
+                <select
+                  id="project"
+                  className="form-select"
+                  value={project}
+                  onChange={(e) =>
+                    setProject(
+                      Array.from(
+                        e.target.selectedOptions,
+                        (option) => option.value
+                      )
+                    )
+                  }
+                  required
+                  multiple
+                >
+                  <option value="">Select project</option>
+                  {projects.map((project) => (
+                    <option key={project.id} value={project.name}>
+                      {project.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="outOfOfficeBalance" className="form-label">
+                  Out of office Balance:
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="outOfOfficeBalance"
+                  value={outOfOfficeBalance}
+                  onChange={(e) => setOutOfOfficeBalance(e.target.value)}
+                  required
+                />
+              </div>
+              <SubmitButton id={employeeId} />
+            </form>
+          </div>
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="text"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="status">Status:</label>
-          <select
-            id="status"
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-            required
-          >
-            <option value="">Select status</option>
-            {statusChoice.map((status) => (
-              <option key={status} value={status}>
-                {status}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="peoplePartner">People partner:</label>
-          <select
-            id="peoplePartner"
-            value={peoplePartner}
-            onChange={(e) => setPeoplePartner(e.target.value)}
-            required
-          >
-            <option value="">Select Project Manager</option>
-            {projectManagers.map((manager) => (
-              <option key={manager.id} value={manager.fullName}>
-                {manager.fullName}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="position">Position:</label>
-          <select
-            id="position"
-            value={position}
-            onChange={(e) => setPosition(e.target.value)}
-            required
-          >
-            <option value="">Select position</option>
-            {positions.map((position) => (
-              <option key={position} value={position}>
-                {position}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="role">Role:</label>
-          <select
-            id="role"
-            value={role}
-            onChange={(e) =>
-              setRole(
-                Array.from(e.target.selectedOptions, (option) => option.value)
-              )
-            }
-            required
-          >
-            <option value="">Select role</option>
-            {roles.map((role) => (
-              <option key={role} value={role}>
-                {role}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="subdivision">Subdivision:</label>
-          <select
-            id="subdivision"
-            value={subdivision}
-            onChange={(e) => setSubdivision(e.target.value)}
-            required
-          >
-            <option value="">Select subdivision</option>
-            {subdivisions.map((subdivisions) => (
-              <option key={subdivisions} value={subdivisions}>
-                {subdivisions}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="project">Current projects:</label>
-          <select
-            id="project"
-            value={project}
-            onChange={(e) =>
-              setProject(
-                Array.from(e.target.selectedOptions, (option) => option.value)
-              )
-            }
-            required
-            multiple
-          >
-            <option value="">Select project</option>
-            {projects.map((project) => (
-              <option key={project.id} value={project.name}>
-                {project.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="outOfOfficeBalance">Out of office Balance:</label>
-          <input
-            type="text"
-            id="outOfOfficeBalance"
-            value={outOfOfficeBalance}
-            onChange={(e) => setOutOfOfficeBalance(e.target.value)}
-            required
-          />
-        </div>
-        <SubmitButton id={employeeId} />
-      </form>
+      </div>
     </div>
   );
 }

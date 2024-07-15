@@ -73,97 +73,126 @@ export function ProjectForm({ projectId, setShowForm }: ProjectFormProps) {
   };
 
   return (
-    <div>
-      <h2>{projectId ? "Update Project" : "Create New Project"}</h2>
-      <form onSubmit={projectId ? handleUpdate : handleSubmit}>
-        <div>
-          <label htmlFor="projectName">Project Name:</label>
-          <input
-            type="text"
-            id="projectName"
-            value={projectName}
-            onChange={(e) => setProjectName(e.target.value)}
-            required
-          />
+    <div className="container mt-4 w-50">
+      <div className="row justify-content-center">
+        <div className="col-10">
+          <div className="border p-4">
+            <h2 className="text-center">
+              {projectId ? "Update Project" : "Create New Project"}
+            </h2>
+            <form onSubmit={projectId ? handleUpdate : handleSubmit}>
+              <div className="mb-3">
+                <label htmlFor="projectName" className="form-label">
+                  Project Name:
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="projectName"
+                  value={projectName}
+                  onChange={(e) => setProjectName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="projectType" className="form-label">
+                  Project Type:
+                </label>
+                <select
+                  className="form-select"
+                  id="projectType"
+                  value={projectType}
+                  onChange={(e) => setProjectType(e.target.value)}
+                  required
+                >
+                  <option value="">Select Project Type</option>
+                  {availableProjectTypes.map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="startDate" className="form-label">
+                  Start Date:
+                </label>
+                <input
+                  type="date"
+                  className="form-control"
+                  id="startDate"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="endDate" className="form-label">
+                  End Date:
+                </label>
+                <input
+                  type="date"
+                  className="form-control"
+                  id="endDate"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="projectManager" className="form-label">
+                  Project Manager:
+                </label>
+                <select
+                  className="form-select"
+                  id="projectManager"
+                  value={projectManager}
+                  onChange={(e) => setProjectManager(e.target.value)}
+                  required
+                >
+                  <option value="">Select Project Manager</option>
+                  {projectManagers.map((manager) => (
+                    <option key={manager.id} value={manager.fullName}>
+                      {manager.fullName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="comment" className="form-label">
+                  Comment:
+                </label>
+                <textarea
+                  className="form-control"
+                  id="comment"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  rows={3}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="status" className="form-label">
+                  Status:
+                </label>
+                <select
+                  className="form-select"
+                  id="status"
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                  required
+                >
+                  <option value="">Select status</option>
+                  {statusChoice.map((status) => (
+                    <option key={status} value={status}>
+                      {status}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <SubmitButton id={projectId} />
+            </form>
+          </div>
         </div>
-        <div>
-          <label htmlFor="projectType">Project Type:</label>
-          <select
-            id="projectType"
-            value={projectType}
-            onChange={(e) => setProjectType(e.target.value)}
-            required
-          >
-            <option value="">Select Project Type</option>
-            {availableProjectTypes.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="startDate">Start Date:</label>
-          <input
-            type="date"
-            id="startDate"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="endDate">End Date:</label>
-          <input
-            type="date"
-            id="endDate"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="projectManager">Project Manager:</label>
-          <select
-            id="projectManager"
-            value={projectManager}
-            onChange={(e) => setProjectManager(e.target.value)}
-            required
-          >
-            <option value="">Select Project Manager</option>
-            {projectManagers.map((manager) => (
-              <option key={manager.id} value={manager.fullName}>
-                {manager.fullName}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="comment">Comment:</label>
-          <textarea
-            id="comment"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            rows={3}
-          />
-        </div>
-        <div>
-          <label htmlFor="status">Status:</label>
-          <select
-            id="status"
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-            required
-          >
-            <option value="">Select status</option>
-            {statusChoice.map((status) => (
-              <option key={status} value={status}>
-                {status}
-              </option>
-            ))}
-          </select>
-        </div>
-        <SubmitButton id={projectId} />
-      </form>
+      </div>
     </div>
   );
 }
