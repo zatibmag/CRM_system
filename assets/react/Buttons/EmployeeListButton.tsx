@@ -15,6 +15,7 @@ export function EmployeeListButton() {
       onClick={() => {
         handleEmployeeList();
       }}
+      className="btn btn-secondary"
     >
       Employee list
     </button>

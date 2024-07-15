@@ -15,6 +15,7 @@ export function ApprovalListButton() {
       onClick={() => {
         handleApprovalList();
       }}
+      className="btn btn-secondary"
     >
       Approval request list
     </button>

@@ -15,6 +15,7 @@ export function LeaveRequestListButton() {
       onClick={() => {
         handleLeaveRequestList();
       }}
+      className="btn btn-secondary"
     >
       Leave request list
     </button>

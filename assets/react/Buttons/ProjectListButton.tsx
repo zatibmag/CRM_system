@@ -15,6 +15,7 @@ export function ProjectListButton() {
       onClick={() => {
         handleProjectList();
       }}
+      className="btn btn-secondary"
     >
       Project list
     </button>

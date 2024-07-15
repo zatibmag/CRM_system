@@ -7,7 +7,7 @@ import { ApprovalListButton } from "../Buttons/ApprovalRequestListButton";
 export function NavigationBar() {
   return (
     <>
-      <div className="d-flex flex-row">
+      <div className="d-flex flex-row card">
         <div className="p-2">
           <ProjectListButton />
         </div>
