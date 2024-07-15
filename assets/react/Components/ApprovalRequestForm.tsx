@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useEmployees } from "../Hooks/useEmployees";
 import { useLeaveRequests } from "../Hooks/useLeaveRequest";
 import { ApproveButton } from "../Buttons/ApproveButton";
-
+import { RejectButton } from "../Buttons/RejectButton";
 interface ApprovalRequestFormProps {
   approvalRequestId: number;
   setLeaveRequestId: (id: number) => void;
@@ -94,6 +94,11 @@ export function ApprovalRequestForm({
         </div>
         {/* Pass approver, leaveRequest, and comment to ApproveButton */}
         <ApproveButton
+          leaveRequestId={leaveRequest ? leaveRequest.id : 0} // Pass leaveRequestId or a default value
+          approver={approver}
+          comment={comment}
+        />
+        <RejectButton
           leaveRequestId={leaveRequest ? leaveRequest.id : 0} // Pass leaveRequestId or a default value
           approver={approver}
           comment={comment}
