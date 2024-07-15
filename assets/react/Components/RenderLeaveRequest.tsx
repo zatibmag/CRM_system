@@ -58,7 +58,7 @@ export function RenderLeaveRequests({
               name={"Update"}
               data={leaveRequest.id}
               setShowForm={setShowForm}
-              setProjectId={setLeaveRequestId}
+              setId={setLeaveRequestId}
             />
             <DeleteButton
               name={"Delete"}

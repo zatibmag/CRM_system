@@ -52,7 +52,6 @@ export function EmployeeTableHead({ handleSort }: EmployeeTableHeadProps) {
             data={"outOfOfficeBalance"}
           />
         </th>
-        <th>Photo</th>
         <th>Actions</th>
       </tr>
     </thead>

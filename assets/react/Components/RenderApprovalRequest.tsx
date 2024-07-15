@@ -45,12 +45,6 @@ export function RenderApprovalRequests({
           <td>{approvalRequest.status}</td>
           <td>{approvalRequest.comment}</td>
           <td>
-            <UpdateButton
-              name={"Update"}
-              data={approvalRequest.id}
-              setShowForm={setShowForm}
-              setProjectId={setApprovalRequestId}
-            />
             <DeleteButton
               name={"Delete"}
               handleDelete={handleDelete}

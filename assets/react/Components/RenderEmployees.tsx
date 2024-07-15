@@ -45,13 +45,12 @@ export function RenderEmployees({
           <td>{employee.subdivision}</td>
           <td>{employee.projects?.join(", ") ?? "No projects assigned"}</td>
           <td>{employee.outOfOfficeBalance}</td>
-          <td>{employee.photo}</td>
           <td>
             <UpdateButton
               name={"Update"}
               data={employee.id}
               setShowForm={setShowForm}
-              setProjectId={setEmployeeId}
+              setId={setEmployeeId}
             />
             <DeleteButton
               name={"Delete Employee"}

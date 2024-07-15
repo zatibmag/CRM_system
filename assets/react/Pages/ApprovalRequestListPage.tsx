@@ -79,7 +79,10 @@ export function ApprovalRequestListPage(): React.JSX.Element {
   function ShowForm() {
     return (
       <>
-        <ApprovalRequestForm approvalRequestId={approvalRequestId} />
+        <ApprovalRequestForm
+          approvalRequestId={approvalRequestId}
+          setShowForm={setShowForm}
+        />
         <BackButton setShowForm={setShowForm} />
       </>
     );

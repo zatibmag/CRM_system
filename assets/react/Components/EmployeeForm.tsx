@@ -12,9 +12,10 @@ import { useCsrfTokenFormEmployee } from "../Hooks/useCsrfTokenFormEmployee";
 
 interface EmployeeFormProps {
   employeeId: number;
+  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function EmployeeForm({ employeeId }: EmployeeFormProps) {
+export function EmployeeForm({ employeeId, setShowForm }: EmployeeFormProps) {
   const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("");
@@ -54,6 +55,7 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
         photo,
         _csrf_token: csrfTokenForm,
       });
+      setShowForm(false);
     } catch (error) {
       console.error(error);
     }
@@ -79,6 +81,7 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
           _csrf_token: csrfTokenForm,
         }
       );
+      setShowForm(false);
     } catch (error) {
       console.error(error);
     }
@@ -117,9 +120,9 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
             required
           >
             <option value="">Select status</option>
-            {statusChoice.map((type) => (
-              <option key={type} value={type}>
-                {type}
+            {statusChoice.map((status) => (
+              <option key={status} value={status}>
+                {status}
               </option>
             ))}
           </select>
@@ -149,9 +152,9 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
             required
           >
             <option value="">Select position</option>
-            {positions.map((type) => (
-              <option key={type} value={type}>
-                {type}
+            {positions.map((position) => (
+              <option key={position} value={position}>
+                {position}
               </option>
             ))}
           </select>
@@ -169,9 +172,9 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
             required
           >
             <option value="">Select role</option>
-            {roles.map((type) => (
-              <option key={type} value={type}>
-                {type}
+            {roles.map((role) => (
+              <option key={role} value={role}>
+                {role}
               </option>
             ))}
           </select>
@@ -185,9 +188,9 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
             required
           >
             <option value="">Select subdivision</option>
-            {subdivisions.map((type) => (
-              <option key={type} value={type}>
-                {type}
+            {subdivisions.map((subdivisions) => (
+              <option key={subdivisions} value={subdivisions}>
+                {subdivisions}
               </option>
             ))}
           </select>
@@ -221,14 +224,6 @@ export function EmployeeForm({ employeeId }: EmployeeFormProps) {
             value={outOfOfficeBalance}
             onChange={(e) => setOutOfOfficeBalance(e.target.value)}
             required
-          />
-        </div>
-        <div>
-          <label htmlFor="photo">Photo:</label>
-          <input
-            type="file"
-            id="photo"
-            onChange={(e) => setPhoto(e.target.files?.[0] || null)}
           />
         </div>
         <SubmitButton id={employeeId} />

@@ -8,13 +8,14 @@ interface RejectButtonProps {
   leaveRequestId: number;
   approver: string;
   comment: string;
+  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-// Change the component definition to a named export
 export const RejectButton: React.FC<RejectButtonProps> = ({
   leaveRequestId,
   approver,
   comment,
+  setShowForm,
 }: RejectButtonProps) => {
   const { leaveRequests, fetchLeaveRequests } = useLeaveRequests();
   const { csrfTokenForm: csrfTokenFormApprovalRequest } =
@@ -33,7 +34,6 @@ export const RejectButton: React.FC<RejectButtonProps> = ({
         return;
       }
 
-      // Send approval request
       await axios.post("http://127.0.0.1:8000/approval-request/new", {
         approver,
         leaveRequest: leaveRequest.name,
@@ -42,7 +42,6 @@ export const RejectButton: React.FC<RejectButtonProps> = ({
         _csrf_token: csrfTokenFormApprovalRequest,
       });
 
-      // Update leave request status
       await axios.put(
         `http://127.0.0.1:8000/leave-request/${leaveRequestId}/edit`,
         {
@@ -58,7 +57,6 @@ export const RejectButton: React.FC<RejectButtonProps> = ({
         }
       );
 
-      // After successful update, fetch updated leave requests and employees
       await fetchLeaveRequests();
     } catch (error) {
       console.error("Error approving request:", error);
@@ -66,7 +64,13 @@ export const RejectButton: React.FC<RejectButtonProps> = ({
   };
 
   return (
-    <button type="button" onClick={handleSubmit}>
+    <button
+      type="button"
+      onClick={() => {
+        setShowForm(false);
+        handleSubmit();
+      }}
+    >
       Reject
     </button>
   );

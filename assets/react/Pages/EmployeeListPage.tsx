@@ -74,7 +74,7 @@ export function EmployeeListPage(): React.JSX.Element {
   function ShowForm() {
     return (
       <div>
-        <EmployeeForm employeeId={employeeId} />
+        <EmployeeForm employeeId={employeeId} setShowForm={setShowForm} />
         <BackButton setShowForm={setShowForm} />
       </div>
     );

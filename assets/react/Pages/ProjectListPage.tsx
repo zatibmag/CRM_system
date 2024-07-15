@@ -74,7 +74,7 @@ export function ProjectListPage(): React.JSX.Element {
   function ShowForm() {
     return (
       <div>
-        <ProjectForm projectId={projectId} />
+        <ProjectForm projectId={projectId} setShowForm={setShowForm} />
         <BackButton setShowForm={setShowForm} />
       </div>
     );

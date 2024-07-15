@@ -10,13 +10,14 @@ interface ApproveButtonProps {
   leaveRequestId: number;
   approver: string;
   comment: string;
+  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-// Change the component definition to a named export
 export const ApproveButton: React.FC<ApproveButtonProps> = ({
   leaveRequestId,
   approver,
   comment,
+  setShowForm,
 }: ApproveButtonProps) => {
   const { leaveRequests, fetchLeaveRequests } = useLeaveRequests();
   const { employees, fetchEmployees } = useEmployees();
@@ -28,7 +29,6 @@ export const ApproveButton: React.FC<ApproveButtonProps> = ({
 
   const handleSubmit = async () => {
     try {
-      // Find the leaveRequest object from leaveRequests array
       const leaveRequest = leaveRequests.find(
         (leaveRequest) => leaveRequest.id === leaveRequestId
       );
@@ -44,7 +44,6 @@ export const ApproveButton: React.FC<ApproveButtonProps> = ({
         return;
       }
 
-      // Find the employee object from employees array
       const employee = employees.find(
         (employee) => employee.fullName === leaveRequest.employee
       );
@@ -54,11 +53,6 @@ export const ApproveButton: React.FC<ApproveButtonProps> = ({
         return;
       }
 
-      // Log the leaveRequest and employee objects for debugging
-      console.log("Leave Request:", leaveRequest);
-      console.log("Employee:", employee);
-
-      // Send approval request
       await axios.post("http://127.0.0.1:8000/approval-request/new", {
         approver,
         leaveRequest: leaveRequest.name,
@@ -67,7 +61,6 @@ export const ApproveButton: React.FC<ApproveButtonProps> = ({
         _csrf_token: csrfTokenFormApprovalRequest,
       });
 
-      // Update leave request status
       await axios.put(
         `http://127.0.0.1:8000/leave-request/${leaveRequestId}/edit`,
         {
@@ -83,8 +76,6 @@ export const ApproveButton: React.FC<ApproveButtonProps> = ({
         }
       );
 
-      console.log(totalDays);
-      // Update employee details
       await axios.put(`http://127.0.0.1:8000/employees/${employee.id}/edit`, {
         fullName: employee.fullName,
         password: employee.password,
@@ -98,7 +89,6 @@ export const ApproveButton: React.FC<ApproveButtonProps> = ({
         _csrf_token: csrfTokenFormEmployee,
       });
 
-      // After successful update, fetch updated leave requests and employees
       await fetchLeaveRequests();
       await fetchEmployees();
     } catch (error) {
@@ -107,7 +97,13 @@ export const ApproveButton: React.FC<ApproveButtonProps> = ({
   };
 
   return (
-    <button type="button" onClick={handleSubmit}>
+    <button
+      type="button"
+      onClick={() => {
+        setShowForm(false);
+        handleSubmit();
+      }}
+    >
       Approve
     </button>
   );

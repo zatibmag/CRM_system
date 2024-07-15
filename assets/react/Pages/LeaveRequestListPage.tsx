@@ -75,7 +75,10 @@ export function LeaveRequestListPage(): React.JSX.Element {
   function ShowForm() {
     return (
       <div>
-        <LeaveRequestForm leaveRequestId={leaveRequestId} />
+        <LeaveRequestForm
+          leaveRequestId={leaveRequestId}
+          setShowForm={setShowForm}
+        />
         <BackButton setShowForm={setShowForm} />
       </div>
     );

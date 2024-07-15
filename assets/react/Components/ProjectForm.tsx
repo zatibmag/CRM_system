@@ -9,9 +9,10 @@ import { useEmployees } from "../Hooks/useEmployees";
 
 interface ProjectFormProps {
   projectId: number;
+  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function ProjectForm({ projectId }: ProjectFormProps) {
+export function ProjectForm({ projectId, setShowForm }: ProjectFormProps) {
   const [projectName, setProjectName] = useState("");
   const [projectType, setProjectType] = useState("");
   const [projectManager, setProjectManager] = useState("");
@@ -42,6 +43,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
         status,
         _csrf_token: csrfTokenForm,
       });
+      setShowForm(false);
     } catch (error) {
       console.error(error);
     }
@@ -64,6 +66,7 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
           _csrf_token: csrfTokenForm,
         }
       );
+      setShowForm(false);
     } catch (error) {
       console.error(error);
     }
@@ -152,9 +155,9 @@ export function ProjectForm({ projectId }: ProjectFormProps) {
             required
           >
             <option value="">Select status</option>
-            {statusChoice.map((type) => (
-              <option key={type} value={type}>
-                {type}
+            {statusChoice.map((status) => (
+              <option key={status} value={status}>
+                {status}
               </option>
             ))}
           </select>

@@ -57,7 +57,7 @@ export function RenderProjects({
               name={"Update"}
               data={project.id}
               setShowForm={setShowForm}
-              setProjectId={setProjectId}
+              setId={setProjectId}
             />
             <DeleteButton
               name={"Delete Project"}

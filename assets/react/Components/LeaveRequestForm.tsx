@@ -8,9 +8,13 @@ import { useAbsenceReason } from "../Hooks/useAbscenceReason";
 
 interface LeaveRequestFormProps {
   leaveRequestId: number;
+  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function LeaveRequestForm({ leaveRequestId }: LeaveRequestFormProps) {
+export function LeaveRequestForm({
+  leaveRequestId,
+  setShowForm,
+}: LeaveRequestFormProps) {
   const [name, setName] = useState("");
   const [leaveRequestEmployee, setLeaveRequestEmployee] = useState("");
   const [absenceReason, setAbsenceReason] = useState("");
@@ -39,6 +43,7 @@ export function LeaveRequestForm({ leaveRequestId }: LeaveRequestFormProps) {
           _csrf_token: csrfTokenForm,
         }
       );
+      setShowForm(false);
     } catch (error) {
       console.error(error);
     }
@@ -62,6 +67,7 @@ export function LeaveRequestForm({ leaveRequestId }: LeaveRequestFormProps) {
           _csrf_token: csrfTokenForm,
         }
       );
+      setShowForm(false);
     } catch (error) {
       console.error(error);
     }

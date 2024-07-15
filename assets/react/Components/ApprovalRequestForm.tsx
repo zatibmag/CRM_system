@@ -8,10 +8,12 @@ import { ShowLeaveRequestData } from "../Components/ShowLeaveRequestData";
 
 interface ApprovalRequestFormProps {
   approvalRequestId: number;
+  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function ApprovalRequestForm({
   approvalRequestId,
+  setShowForm,
 }: ApprovalRequestFormProps) {
   const [approver, setApprover] = useState("");
   const [leaveRequest, setLeaveRequest] = useState<any>(null);
@@ -20,19 +22,10 @@ export function ApprovalRequestForm({
   const { employees } = useEmployees();
   const { leaveRequests } = useLeaveRequests();
 
-  // Define handleSubmit function to handle form submission
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Handle form submission logic here
-    // For demonstration, console.log the form data
-    console.log({
-      approver,
-      leaveRequest,
-      comment,
-    });
   };
 
-  // Effect to set leaveRequestId when leaveRequest changes
   useEffect(() => {
     if (leaveRequest) {
       setLeaveRequestId(leaveRequest.id);
@@ -93,16 +86,17 @@ export function ApprovalRequestForm({
             rows={3}
           />
         </div>
-        {/* Pass approver, leaveRequest, and comment to ApproveButton */}
         <ApproveButton
-          leaveRequestId={leaveRequest ? leaveRequest.id : 0} // Pass leaveRequestId or a default value
+          leaveRequestId={leaveRequest ? leaveRequest.id : 0}
           approver={approver}
           comment={comment}
+          setShowForm={setShowForm}
         />
         <RejectButton
-          leaveRequestId={leaveRequest ? leaveRequest.id : 0} // Pass leaveRequestId or a default value
+          leaveRequestId={leaveRequest ? leaveRequest.id : 0}
           approver={approver}
           comment={comment}
+          setShowForm={setShowForm}
         />
       </form>
       {leaveRequestId && (
