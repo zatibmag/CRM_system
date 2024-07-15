@@ -79,7 +79,7 @@ export function LeaveRequestFilterMenu({
         listData={leaveRequests}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
-        placeholder={"Search by name"}
+        placeholder={"Search by Name"}
       />
       <Filter
         availableOptions={employeesFullName}
