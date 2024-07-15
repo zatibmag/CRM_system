@@ -85,7 +85,7 @@ export function EmployeeListPage(): React.JSX.Element {
       {showForm ? (
         ShowForm()
       ) : (
-        <div className="border border-secondary rounded bg-gradient col-md-8">
+        <>
           <h2 className="mb-4">Employees</h2>
           <div className="input-group mb-3">
             <EmployeeFilterMenu
@@ -93,18 +93,16 @@ export function EmployeeListPage(): React.JSX.Element {
               setFilteredEmployees={setFilteredEmployees}
             />
           </div>
-          <div className="table-responsive">
-            <table className="table table-bordered table-hover">
-              <EmployeeTableHead handleSort={handleSort} />
-              <RenderEmployees
-                filteredEmployees={filteredEmployees}
-                setShowForm={setShowForm}
-                setEmployeeId={setEmployeeId}
-              />
-            </table>
-          </div>
+          <table className="table table-bordered table-hover">
+            <EmployeeTableHead handleSort={handleSort} />
+            <RenderEmployees
+              filteredEmployees={filteredEmployees}
+              setShowForm={setShowForm}
+              setEmployeeId={setEmployeeId}
+            />
+          </table>
           <CreateNewButton setShowForm={setShowForm} />
-        </div>
+        </>
       )}
     </>
   );

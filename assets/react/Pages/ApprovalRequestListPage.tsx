@@ -95,7 +95,7 @@ export function ApprovalRequestListPage(): React.JSX.Element {
           <ShowForm />
         </>
       ) : (
-        <div className="border border-secondary rounded bg-gradient col-md-8">
+        <>
           <h2 className="mb-4">Approval Requests</h2>
           <div className="input-group mb-3">
             <ApprovalRequestFilterMenu
@@ -103,18 +103,16 @@ export function ApprovalRequestListPage(): React.JSX.Element {
               setFilteredApprovalRequests={setFilteredApprovalRequests}
             />
           </div>
-          <div className="table-responsive">
-            <table className="table table-bordered table-hover">
-              <ApprovalRequestTableHead handleSort={handleSort} />
-              <RenderApprovalRequests
-                filteredApprovalRequests={filteredApprovalRequests}
-                setShowForm={setShowForm}
-                setApprovalRequestId={setApprovalRequestId}
-              />
-            </table>
-          </div>
+          <table className="table table-bordered table-hover">
+            <ApprovalRequestTableHead handleSort={handleSort} />
+            <RenderApprovalRequests
+              filteredApprovalRequests={filteredApprovalRequests}
+              setShowForm={setShowForm}
+              setApprovalRequestId={setApprovalRequestId}
+            />
+          </table>
           <CreateNewButton setShowForm={setShowForm} />
-        </div>
+        </>
       )}
     </>
   );

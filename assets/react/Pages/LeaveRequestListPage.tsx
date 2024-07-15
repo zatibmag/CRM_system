@@ -89,7 +89,7 @@ export function LeaveRequestListPage(): React.JSX.Element {
       {showForm ? (
         ShowForm()
       ) : (
-        <div className="border border-secondary rounded bg-gradient col-md-8">
+        <>
           <h2 className="mb-4">Leave Requests</h2>
           <div className="input-group mb-3">
             <LeaveRequestFilterMenu
@@ -97,18 +97,16 @@ export function LeaveRequestListPage(): React.JSX.Element {
               setFilteredLeaveRequests={setFilteredLeaveRequests}
             />
           </div>
-          <div className="table-responsive">
-            <table className="table table-bordered table-hover">
-              <LeaveRequestTableHead handleSort={handleSort} />
-              <RenderLeaveRequests
-                filteredLeaveRequests={filteredLeaveRequests}
-                setShowForm={setShowForm}
-                setLeaveRequestId={setLeaveRequestId}
-              />
-            </table>
-          </div>
+          <table className="table table-bordered table-hover">
+            <LeaveRequestTableHead handleSort={handleSort} />
+            <RenderLeaveRequests
+              filteredLeaveRequests={filteredLeaveRequests}
+              setShowForm={setShowForm}
+              setLeaveRequestId={setLeaveRequestId}
+            />
+          </table>
           <CreateNewButton setShowForm={setShowForm} />
-        </div>
+        </>
       )}
     </>
   );
