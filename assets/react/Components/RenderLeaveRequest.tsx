@@ -35,7 +35,7 @@ export function RenderLeaveRequests({
   return (
     <tbody>
       {filteredLeaveRequests.map((leaveRequest) => (
-        <tr key={leaveRequest.id}>
+        <tr key={leaveRequest.id} className="text-center">
           <td>{leaveRequest.id}</td>
           <td>{leaveRequest.name}</td>
           <td>
@@ -54,17 +54,19 @@ export function RenderLeaveRequests({
           <td>{leaveRequest.comment}</td>
           <td>{leaveRequest.reviewerComment}</td>
           <td>
-            <UpdateButton
-              name={"Update"}
-              data={leaveRequest.id}
-              setShowForm={setShowForm}
-              setId={setLeaveRequestId}
-            />
-            <DeleteButton
-              name={"Delete"}
-              handleDelete={handleDelete}
-              data={leaveRequest.id}
-            />
+            <div className="d-flex justify-content-center">
+              <UpdateButton
+                name={"Update"}
+                data={leaveRequest.id}
+                setShowForm={setShowForm}
+                setId={setLeaveRequestId}
+              />
+              <DeleteButton
+                name={"Delete"}
+                handleDelete={handleDelete}
+                data={leaveRequest.id}
+              />
+            </div>
           </td>
         </tr>
       ))}

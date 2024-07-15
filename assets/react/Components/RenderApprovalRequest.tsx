@@ -38,7 +38,7 @@ export function RenderApprovalRequests({
   return (
     <tbody>
       {filteredApprovalRequests.map((approvalRequest) => (
-        <tr key={approvalRequest.id}>
+        <tr key={approvalRequest.id} className="text-center">
           <td>{approvalRequest.id}</td>
           <td>{approvalRequest.approver}</td>
           <td>{approvalRequest.leaveRequest}</td>

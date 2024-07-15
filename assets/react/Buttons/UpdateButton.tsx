@@ -15,7 +15,7 @@ export function UpdateButton({
 }: UpdateButtonProps) {
   return (
     <button
-      className="btn btn-primary"
+      className="btn btn-primary me-2"
       onClick={() => {
         setShowForm(true);
         setId(data);

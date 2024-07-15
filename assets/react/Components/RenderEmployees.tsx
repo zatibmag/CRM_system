@@ -35,7 +35,7 @@ export function RenderEmployees({
   return (
     <tbody>
       {filteredEmployees.map((employee) => (
-        <tr key={employee.id}>
+        <tr key={employee.id} className="text-center">
           <td>{employee.id}</td>
           <td>{employee.fullName}</td>
           <td>{employee.status}</td>
@@ -45,18 +45,20 @@ export function RenderEmployees({
           <td>{employee.subdivision}</td>
           <td>{employee.projects?.join(", ") ?? "No projects assigned"}</td>
           <td>{employee.outOfOfficeBalance}</td>
-          <td>
-            <UpdateButton
-              name={"Update"}
-              data={employee.id}
-              setShowForm={setShowForm}
-              setId={setEmployeeId}
-            />
-            <DeleteButton
-              name={"Delete"}
-              handleDelete={handleDelete}
-              data={employee.id}
-            />
+          <td className="p-2">
+            <div className="d-flex justify-content-center">
+              <UpdateButton
+                name={"Update"}
+                data={employee.id}
+                setShowForm={setShowForm}
+                setId={setEmployeeId}
+              />
+              <DeleteButton
+                name={"Delete"}
+                handleDelete={handleDelete}
+                data={employee.id}
+              />
+            </div>
           </td>
         </tr>
       ))}

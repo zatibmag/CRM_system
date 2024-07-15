@@ -35,7 +35,7 @@ export function RenderProjects({
   return (
     <tbody>
       {filteredProjects.map((project) => (
-        <tr key={project.id}>
+        <tr key={project.id} className="text-center">
           <td>{project.id}</td>
           <td>{project.name}</td>
           <td>{project.projectType}</td>
@@ -53,17 +53,19 @@ export function RenderProjects({
           <td>{project.status}</td>
           <td>{project.comment}</td>
           <td>
-            <UpdateButton
-              name={"Update"}
-              data={project.id}
-              setShowForm={setShowForm}
-              setId={setProjectId}
-            />
-            <DeleteButton
-              name={"Delete"}
-              handleDelete={handleDelete}
-              data={project.id}
-            />
+            <div className="d-flex justify-content-center">
+              <UpdateButton
+                name={"Update"}
+                data={project.id}
+                setShowForm={setShowForm}
+                setId={setProjectId}
+              />
+              <DeleteButton
+                name={"Delete"}
+                handleDelete={handleDelete}
+                data={project.id}
+              />
+            </div>
           </td>
         </tr>
       ))}
