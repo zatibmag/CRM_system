@@ -53,7 +53,7 @@ export function RenderEmployees({
               setId={setEmployeeId}
             />
             <DeleteButton
-              name={"Delete Employee"}
+              name={"Delete"}
               handleDelete={handleDelete}
               data={employee.id}
             />

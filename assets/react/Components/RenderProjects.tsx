@@ -60,7 +60,7 @@ export function RenderProjects({
               setId={setProjectId}
             />
             <DeleteButton
-              name={"Delete Project"}
+              name={"Delete"}
               handleDelete={handleDelete}
               data={project.id}
             />
