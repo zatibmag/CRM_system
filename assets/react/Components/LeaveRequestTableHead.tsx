@@ -10,7 +10,7 @@ export function LeaveRequestTableHead({
 }: LeaveRequestTableHeadProps) {
   return (
     <thead className="thead-dark">
-      <tr>
+      <tr className="text-center">
         <th>
           <SortButton name={"ID"} handleSort={handleSort} data={"id"} />
         </th>
@@ -55,8 +55,8 @@ export function LeaveRequestTableHead({
             data={"comment"}
           />
         </th>
-        <th>Reviewer comment</th>
-        <th>Actions</th>
+        <th className="align-middle mt-2">Reviewer comment</th>
+        <th className="align-middle mt-2">Actions</th>
       </tr>
     </thead>
   );

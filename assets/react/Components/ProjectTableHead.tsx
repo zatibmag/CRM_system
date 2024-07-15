@@ -8,7 +8,7 @@ interface ProjectTableHeadProps {
 export function ProjectTableHead({ handleSort }: ProjectTableHeadProps) {
   return (
     <thead className="thead-dark">
-      <tr>
+      <tr className="text-center">
         <th>
           <SortButton name={"ID"} handleSort={handleSort} data={"id"} />
         </th>
@@ -36,13 +36,7 @@ export function ProjectTableHead({ handleSort }: ProjectTableHeadProps) {
             data={"endDate.date"}
           />
         </th>
-        <th>
-          <SortButton
-            name={"Project Manager"}
-            handleSort={handleSort}
-            data={"projectManager"}
-          />
-        </th>
+        <th className="align-middle mt-2">Project Manager</th>
         <th>
           <SortButton name={"Status"} handleSort={handleSort} data={"status"} />
         </th>
@@ -53,7 +47,7 @@ export function ProjectTableHead({ handleSort }: ProjectTableHeadProps) {
             data={"comment"}
           />
         </th>
-        <th>Actions</th>
+        <th className="align-middle mt-2">Actions</th>
       </tr>
     </thead>
   );

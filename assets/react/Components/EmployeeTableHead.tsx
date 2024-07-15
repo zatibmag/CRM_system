@@ -8,7 +8,7 @@ interface EmployeeTableHeadProps {
 export function EmployeeTableHead({ handleSort }: EmployeeTableHeadProps) {
   return (
     <thead className="thead-dark">
-      <tr>
+      <tr className="text-center">
         <th>
           <SortButton name={"ID"} handleSort={handleSort} data={"id"} />
         </th>
@@ -36,7 +36,7 @@ export function EmployeeTableHead({ handleSort }: EmployeeTableHeadProps) {
             data={"position"}
           />
         </th>
-        <th>Role</th>
+        <th className="align-middle mt-2">Role</th>
         <th>
           <SortButton
             name={"Subdivision"}
@@ -44,7 +44,7 @@ export function EmployeeTableHead({ handleSort }: EmployeeTableHeadProps) {
             data={"subdivision"}
           />
         </th>
-        <th>Projects</th>
+        <th className="align-middle mt-2">Projects</th>
         <th>
           <SortButton
             name={"OutOfOfficeBalance"}
@@ -52,7 +52,7 @@ export function EmployeeTableHead({ handleSort }: EmployeeTableHeadProps) {
             data={"outOfOfficeBalance"}
           />
         </th>
-        <th>Actions</th>
+        <th className="align-middle mt-2">Actions</th>
       </tr>
     </thead>
   );

@@ -10,7 +10,7 @@ export function ApprovalRequestTableHead({
 }: ApprovalRequestTableHeadProps) {
   return (
     <thead className="thead-dark">
-      <tr>
+      <tr className="text-center">
         <th>
           <SortButton name={"ID"} handleSort={handleSort} data={"id"} />
         </th>
@@ -38,7 +38,7 @@ export function ApprovalRequestTableHead({
             data={"comment"}
           />
         </th>
-        <th>Actions</th>
+        <th className="align-middle mt-2">Actions</th>
       </tr>
     </thead>
   );
