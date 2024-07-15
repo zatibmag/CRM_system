@@ -75,7 +75,9 @@ export function ProjectListPage(): React.JSX.Element {
     return (
       <div>
         <ProjectForm projectId={projectId} setShowForm={setShowForm} />
-        <BackButton setShowForm={setShowForm} />
+        <div className="d-flex justify-content-center mt-2 mb-4">
+          <BackButton setShowForm={setShowForm} />
+        </div>
       </div>
     );
   }
