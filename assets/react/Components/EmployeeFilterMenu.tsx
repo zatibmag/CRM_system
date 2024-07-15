@@ -102,6 +102,7 @@ export function EmployeeFilterMenu({
         listData={employees}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
+        placeholder={"Search by name"}
       />
       <Filter
         availableOptions={statusChoice}

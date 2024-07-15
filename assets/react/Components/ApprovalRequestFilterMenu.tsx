@@ -28,7 +28,10 @@ export function ApprovalRequestFilterMenu({
     if (searchTerm) {
       filteredApprovalRequests = filteredApprovalRequests.filter(
         (approvalRequest) =>
-          approvalRequest.name.toLowerCase().includes(searchTerm.toLowerCase())
+          approvalRequest.id
+            .toString()
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())
       );
     }
     if (selectedStatus) {
@@ -65,6 +68,7 @@ export function ApprovalRequestFilterMenu({
         listData={approvalRequests}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
+        placeholder={"Search by ID"}
       />
       <Filter
         availableOptions={employeesFullName}

@@ -4,9 +4,15 @@ interface SearchProps {
   listData: any[];
   searchTerm: string;
   setSearchTerm: (term: string) => void;
+  placeholder: string;
 }
 
-export function Search({ listData, searchTerm, setSearchTerm }: SearchProps) {
+export function Search({
+  listData,
+  searchTerm,
+  setSearchTerm,
+  placeholder,
+}: SearchProps) {
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
@@ -15,7 +21,7 @@ export function Search({ listData, searchTerm, setSearchTerm }: SearchProps) {
     <input
       type="text"
       className="form-control"
-      placeholder="Search by Name"
+      placeholder={placeholder}
       value={searchTerm}
       onChange={handleSearch}
     />

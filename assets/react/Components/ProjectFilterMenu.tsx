@@ -88,6 +88,7 @@ export function ProjectFilterMenu({
         listData={projects}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
+        placeholder={"Search by name"}
       />
       <Filter
         availableOptions={availableProjectTypes}
