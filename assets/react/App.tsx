@@ -7,8 +7,8 @@ export function App(): React.JSX.Element {
   return (
     <div>
       {/* <ProjectListPage /> */}
-      {/* <EmployeeListPage /> */}
-      {/* <LeaveRequestListPage /> */}
+      <EmployeeListPage />
+      <LeaveRequestListPage />
       <ApprovalRequestListPage />
     </div>
   );

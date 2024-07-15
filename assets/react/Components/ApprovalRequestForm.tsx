@@ -1,10 +1,8 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { useCsrfTokenFormApprovalRequest } from "../Hooks/useCsrfTokenFormApprovalRequest";
-import { SubmitButton } from "../Buttons/SumbitButton";
 import { useEmployees } from "../Hooks/useEmployees";
 import { useLeaveRequests } from "../Hooks/useLeaveRequest";
+import { ApproveButton } from "../Buttons/ApproveButton";
 
 interface ApprovalRequestFormProps {
   approvalRequestId: number;
@@ -18,48 +16,22 @@ export function ApprovalRequestForm({
   const [approver, setApprover] = useState("");
   const [leaveRequest, setLeaveRequest] = useState<any>(null);
   const [comment, setComment] = useState("");
-  const { csrfTokenForm } = useCsrfTokenFormApprovalRequest();
   const { employees } = useEmployees();
   const { leaveRequests } = useLeaveRequests();
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  // Define handleSubmit function to handle form submission
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/approval-request/new",
-        {
-          approver,
-          leaveRequest: leaveRequest.name,
-          comment,
-          status: "New",
-          _csrf_token: csrfTokenForm,
-        }
-      );
-    } catch (error) {
-      console.error(error);
-    }
+    // Handle form submission logic here
+    // For demonstration, console.log the form data
+    console.log({
+      approver,
+      leaveRequest,
+      comment,
+    });
   };
 
-  const handleUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    try {
-      const response = await axios.put(
-        `http://127.0.0.1:8000/approval-request/${approvalRequestId}/edit`,
-        {
-          approver,
-          leaveRequest: leaveRequest.name,
-          comment,
-          status: "New",
-          _csrf_token: csrfTokenForm,
-        }
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+  // Effect to set leaveRequestId when leaveRequest changes
   useEffect(() => {
     if (leaveRequest) {
       setLeaveRequestId(leaveRequest.id);
@@ -73,7 +45,7 @@ export function ApprovalRequestForm({
           ? "Update Approval Request"
           : "Create New Approval Request"}
       </h2>
-      <form onSubmit={approvalRequestId ? handleUpdate : handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="Approver">Approver:</label>
           <select
@@ -120,7 +92,12 @@ export function ApprovalRequestForm({
             rows={3}
           />
         </div>
-        <SubmitButton id={approvalRequestId} />
+        {/* Pass approver, leaveRequest, and comment to ApproveButton */}
+        <ApproveButton
+          leaveRequestId={leaveRequest ? leaveRequest.id : 0} // Pass leaveRequestId or a default value
+          approver={approver}
+          comment={comment}
+        />
       </form>
     </div>
   );
