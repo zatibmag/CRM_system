@@ -4,18 +4,19 @@ import { useEmployees } from "../Hooks/useEmployees";
 import { useLeaveRequests } from "../Hooks/useLeaveRequest";
 import { ApproveButton } from "../Buttons/ApproveButton";
 import { RejectButton } from "../Buttons/RejectButton";
+import { ShowLeaveRequestData } from "../Components/ShowLeaveRequestData";
+
 interface ApprovalRequestFormProps {
   approvalRequestId: number;
-  setLeaveRequestId: (id: number) => void;
 }
 
 export function ApprovalRequestForm({
   approvalRequestId,
-  setLeaveRequestId,
 }: ApprovalRequestFormProps) {
   const [approver, setApprover] = useState("");
   const [leaveRequest, setLeaveRequest] = useState<any>(null);
   const [comment, setComment] = useState("");
+  const [leaveRequestId, setLeaveRequestId] = useState<number | null>(null);
   const { employees } = useEmployees();
   const { leaveRequests } = useLeaveRequests();
 
@@ -104,6 +105,11 @@ export function ApprovalRequestForm({
           comment={comment}
         />
       </form>
+      {leaveRequestId && (
+        <div className="flex-grow-1 ml-2">
+          <ShowLeaveRequestData leaveRequestId={leaveRequestId} />
+        </div>
+      )}
     </div>
   );
 }
