@@ -8,13 +8,15 @@ import { useLeaveRequests } from "../Hooks/useLeaveRequest";
 
 interface ApprovalRequestFormProps {
   approvalRequestId: number;
+  setLeaveRequestId: (id: number) => void;
 }
 
 export function ApprovalRequestForm({
   approvalRequestId,
+  setLeaveRequestId,
 }: ApprovalRequestFormProps) {
   const [approver, setApprover] = useState("");
-  const [leaveRequest, setLeaveRequest] = useState("");
+  const [leaveRequest, setLeaveRequest] = useState<any>(null);
   const [comment, setComment] = useState("");
   const { csrfTokenForm } = useCsrfTokenFormApprovalRequest();
   const { employees } = useEmployees();
@@ -28,7 +30,7 @@ export function ApprovalRequestForm({
         "http://127.0.0.1:8000/approval-request/new",
         {
           approver,
-          leaveRequest,
+          leaveRequest: leaveRequest.name,
           comment,
           status: "New",
           _csrf_token: csrfTokenForm,
@@ -47,7 +49,7 @@ export function ApprovalRequestForm({
         `http://127.0.0.1:8000/approval-request/${approvalRequestId}/edit`,
         {
           approver,
-          leaveRequest,
+          leaveRequest: leaveRequest.name,
           comment,
           status: "New",
           _csrf_token: csrfTokenForm,
@@ -57,6 +59,12 @@ export function ApprovalRequestForm({
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    if (leaveRequest) {
+      setLeaveRequestId(leaveRequest.id);
+    }
+  }, [leaveRequest, setLeaveRequestId]);
 
   return (
     <div>
@@ -86,8 +94,13 @@ export function ApprovalRequestForm({
           <label htmlFor="leaveRequest">Leave request:</label>
           <select
             id="leaveRequest"
-            value={leaveRequest}
-            onChange={(e) => setLeaveRequest(e.target.value)}
+            value={leaveRequest ? leaveRequest.name : ""}
+            onChange={(e) => {
+              const selectedLeaveRequest = leaveRequests.find(
+                (request) => request.name === e.target.value
+              );
+              setLeaveRequest(selectedLeaveRequest);
+            }}
             required
           >
             <option value="">Select leave request</option>

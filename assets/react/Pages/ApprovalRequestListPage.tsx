@@ -7,9 +7,11 @@ import { RenderApprovalRequests } from "../Components/RenderApprovalRequest";
 import { ApprovalRequestTableHead } from "../Components/ApprovalRequestTableHead";
 import { CreateNewButton } from "../Buttons/CreateNewButton";
 import { BackButton } from "../Buttons/BackButton";
+import { ShowLeaveRequestData } from "../Components/ShowLeaveRequestData";
 
 export function ApprovalRequestListPage(): React.JSX.Element {
   const [showForm, setShowForm] = useState(false);
+  const [leaveRequestId, setLeaveRequestId] = useState<number | null>(null);
   const [approvalRequestId, setApprovalRequestId] = useState<number | null>(
     null
   );
@@ -78,17 +80,31 @@ export function ApprovalRequestListPage(): React.JSX.Element {
 
   function ShowForm() {
     return (
-      <div>
-        <ApprovalRequestForm approvalRequestId={approvalRequestId} />
+      <>
+        <div className="d-flex justify-content-between align-items-start p-2">
+          <div className="flex-grow-1">
+            <ApprovalRequestForm
+              approvalRequestId={approvalRequestId}
+              setLeaveRequestId={setLeaveRequestId}
+            />
+          </div>
+          {leaveRequestId && (
+            <div className="flex-grow-1 ml-2">
+              <ShowLeaveRequestData leaveRequestId={leaveRequestId} />
+            </div>
+          )}
+        </div>
         <BackButton setShowForm={setShowForm} />
-      </div>
+      </>
     );
   }
 
   return (
     <>
       {showForm ? (
-        ShowForm()
+        <>
+          <ShowForm />
+        </>
       ) : (
         <div className="border border-secondary rounded bg-gradient col-md-8">
           <h2 className="mb-4">Approval Requests</h2>
