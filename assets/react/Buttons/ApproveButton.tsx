@@ -57,7 +57,7 @@ export const ApproveButton: React.FC<ApproveButtonProps> = ({
         approver,
         leaveRequest: leaveRequest.name,
         comment,
-        status: "Approve",
+        status: "Approved",
         _csrf_token: csrfTokenFormApprovalRequest,
       });
 
@@ -71,7 +71,7 @@ export const ApproveButton: React.FC<ApproveButtonProps> = ({
           absenceReason: leaveRequest.absenceReason,
           comment: leaveRequest.comment,
           reviewerComment: comment,
-          status: "Approve",
+          status: "Approved",
           _csrf_token: csrfTokenFormLeaveRequest,
         }
       );

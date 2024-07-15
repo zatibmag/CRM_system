@@ -38,7 +38,7 @@ export const RejectButton: React.FC<RejectButtonProps> = ({
         approver,
         leaveRequest: leaveRequest.name,
         comment,
-        status: "Reject",
+        status: "Rejected",
         _csrf_token: csrfTokenFormApprovalRequest,
       });
 
@@ -52,7 +52,7 @@ export const RejectButton: React.FC<RejectButtonProps> = ({
           absenceReason: leaveRequest.absenceReason,
           comment: leaveRequest.comment,
           reviewerComment: comment,
-          status: "Reject",
+          status: "Rejected",
           _csrf_token: csrfTokenFormLeaveRequest,
         }
       );
