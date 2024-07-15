@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ApprovalRequest index{% endblock %}
+
+{% block body %}
+    <h1>ApprovalRequest index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Approver</th>
+                <th>LeaveRequest</th>
+                <th>Status</th>
+                <th>Comment</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for approval_request in approval_requests %}
+            <tr>
+                <td>{{ approval_request.id }}</td>
+                <td>{{ approval_request.approver }}</td>
+                <td>{{ approval_request.leaveRequest }}</td>
+                <td>{{ approval_request.status }}</td>
+                <td>{{ approval_request.comment }}</td>
+                <td>
+                    <a href="{{ path('app_approval_request_show', {'id': approval_request.id}) }}">show</a>
+                    <a href="{{ path('app_approval_request_edit', {'id': approval_request.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_approval_request_new') }}">Create new</a>
+{% endblock %}

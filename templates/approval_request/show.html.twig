@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ApprovalRequest{% endblock %}
+
+{% block body %}
+    <h1>ApprovalRequest</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ approval_request.id }}</td>
+            </tr>
+            <tr>
+                <th>Approver</th>
+                <td>{{ approval_request.approver }}</td>
+            </tr>
+            <tr>
+                <th>LeaveRequest</th>
+                <td>{{ approval_request.leaveRequest }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ approval_request.status }}</td>
+            </tr>
+            <tr>
+                <th>Comment</th>
+                <td>{{ approval_request.comment }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_approval_request_index') }}">back to list</a>
+
+    <a href="{{ path('app_approval_request_edit', {'id': approval_request.id}) }}">edit</a>
+
+    {{ include('approval_request/_delete_form.html.twig') }}
+{% endblock %}

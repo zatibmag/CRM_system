@@ -21,10 +21,6 @@ export function LeaveRequestForm({ leaveRequestId }: LeaveRequestFormProps) {
   const { employees } = useEmployees();
   const { absenceReasons } = useAbsenceReason();
 
-  //   const projectManagers = employees.filter(
-  //     (employee) => employee.position === "PROJECT_MANAGER"
-  //   );
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
