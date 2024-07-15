@@ -86,7 +86,7 @@ export function EmployeeListPage(): React.JSX.Element {
         ShowForm()
       ) : (
         <>
-          <h2 className="mb-4">Employees</h2>
+          <h2 className="mt-3 mb-4 d-flex justify-content-center">Employees</h2>
           <div className="input-group mb-3">
             <EmployeeFilterMenu
               renderEmployees={employees}
@@ -101,7 +101,9 @@ export function EmployeeListPage(): React.JSX.Element {
               setEmployeeId={setEmployeeId}
             />
           </table>
-          <CreateNewButton setShowForm={setShowForm} />
+          <div className="d-flex justify-content-center mt-2 mb-4">
+            <CreateNewButton setShowForm={setShowForm} />
+          </div>
         </>
       )}
     </>

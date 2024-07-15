@@ -7,7 +7,7 @@ interface CreateNewButtonProps {
 export function CreateNewButton({ setShowForm }: CreateNewButtonProps) {
   return (
     <button className="btn btn-primary mt-3" onClick={() => setShowForm(true)}>
-      Create new project
+      Create new
     </button>
   );
 }

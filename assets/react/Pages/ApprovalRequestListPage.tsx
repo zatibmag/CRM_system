@@ -96,7 +96,9 @@ export function ApprovalRequestListPage(): React.JSX.Element {
         </>
       ) : (
         <>
-          <h2 className="mb-4">Approval Requests</h2>
+          <h2 className="mt-3 mb-4 d-flex justify-content-center">
+            Approval Requests
+          </h2>
           <div className="input-group mb-3">
             <ApprovalRequestFilterMenu
               approvalRequests={approvalRequests}
@@ -111,7 +113,9 @@ export function ApprovalRequestListPage(): React.JSX.Element {
               setApprovalRequestId={setApprovalRequestId}
             />
           </table>
-          <CreateNewButton setShowForm={setShowForm} />
+          <div className="d-flex justify-content-center mt-2 mb-4">
+            <CreateNewButton setShowForm={setShowForm} />
+          </div>
         </>
       )}
     </>

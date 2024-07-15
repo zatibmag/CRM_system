@@ -6,21 +6,19 @@ import { ApprovalListButton } from "../Buttons/ApprovalRequestListButton";
 
 export function NavigationBar() {
   return (
-    <>
-      <div className="d-flex flex-row card">
-        <div className="p-2">
-          <ProjectListButton />
-        </div>
-        <div className="p-2">
-          <EmployeeListButton />
-        </div>
-        <div className="p-2">
-          <LeaveRequestListButton />
-        </div>
-        <div className="p-2">
-          <ApprovalListButton />
-        </div>
+    <div className="d-flex flex-row card justify-content-center align-items-center">
+      <div className="p-2">
+        <ProjectListButton />
       </div>
-    </>
+      <div className="p-2">
+        <EmployeeListButton />
+      </div>
+      <div className="p-2">
+        <LeaveRequestListButton />
+      </div>
+      <div className="p-2">
+        <ApprovalListButton />
+      </div>
+    </div>
   );
 }

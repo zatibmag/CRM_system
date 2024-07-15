@@ -86,7 +86,7 @@ export function ProjectListPage(): React.JSX.Element {
         ShowForm()
       ) : (
         <>
-          <h2 className="mb-4">Projects</h2>
+          <h2 className="mt-3 mb-4 d-flex justify-content-center">Projects</h2>
           <div className="input-group mb-3">
             <ProjectFilterMenu
               projects={projects}
@@ -101,7 +101,9 @@ export function ProjectListPage(): React.JSX.Element {
               setProjectId={setProjectId}
             />
           </table>
-          <CreateNewButton setShowForm={setShowForm} />
+          <div className="d-flex justify-content-center mt-2 mb-4">
+            <CreateNewButton setShowForm={setShowForm} />
+          </div>
         </>
       )}
     </>
