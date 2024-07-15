@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Filter } from "./Filter";
 import { Search } from "./Search";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useStatusChoice } from "../Hooks/useStatusChoice";
 import { usePositions } from "../Hooks/usePositions";
 import { useSubdivisions } from "../Hooks/useSubdivisions";
@@ -54,7 +54,7 @@ export function EmployeeFilterMenu({
         (employee) => employee.subdivision === selectedSubdivision
       );
     }
-    if (selectedSubdivision) {
+    if (selectedHrManager) {
       filteredEmployees = filteredEmployees.filter(
         (employee) => employee.peoplePartner === selectedHrManager
       );
@@ -63,7 +63,7 @@ export function EmployeeFilterMenu({
     setFilteredEmployees(filteredEmployees);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     filterEmployees();
   }, [
     searchTerm,
