@@ -5,6 +5,7 @@ import { useCsrfTokenFormLeaveRequest } from "../Hooks/useCsrfTokenFormLeaveRequ
 import { SubmitButton } from "../Buttons/SumbitButton";
 import { useEmployees } from "../Hooks/useEmployees";
 import { useAbsenceReason } from "../Hooks/useAbscenceReason";
+import { BackButton } from "../Buttons/BackButton";
 
 interface LeaveRequestFormProps {
   leaveRequestId: number;
@@ -172,7 +173,12 @@ export function LeaveRequestForm({
                   rows={3}
                 />
               </div>
-              <SubmitButton id={leaveRequestId} />
+              <div className="d-flex justify-content-center">
+                <SubmitButton id={leaveRequestId} />
+              </div>
+              <div className="d-flex justify-content-center mt-3">
+                <BackButton setShowForm={setShowForm} />
+              </div>
             </form>
           </div>
         </div>

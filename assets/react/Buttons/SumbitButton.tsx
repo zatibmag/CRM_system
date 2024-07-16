@@ -5,5 +5,9 @@ interface SubmitButtonProps {
 }
 
 export function SubmitButton({ id }: SubmitButtonProps) {
-  return <button type="submit">{id ? "Update" : "Create"}</button>;
+  return (
+    <button type="submit" className="btn btn-primary col-12">
+      {id ? "Update" : "Create"}
+    </button>
+  );
 }

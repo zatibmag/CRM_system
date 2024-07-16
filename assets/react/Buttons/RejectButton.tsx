@@ -66,6 +66,7 @@ export const RejectButton: React.FC<RejectButtonProps> = ({
   return (
     <button
       type="button"
+      className="btn btn-danger col-6"
       onClick={() => {
         setShowForm(false);
         handleSubmit();

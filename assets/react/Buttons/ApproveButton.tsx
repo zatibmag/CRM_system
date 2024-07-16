@@ -99,6 +99,7 @@ export const ApproveButton: React.FC<ApproveButtonProps> = ({
   return (
     <button
       type="button"
+      className="btn btn-success col-6"
       onClick={() => {
         setShowForm(false);
         handleSubmit();

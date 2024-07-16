@@ -9,6 +9,7 @@ import { useSubdivisions } from "../Hooks/useSubdivisions";
 import { useEmployees } from "../Hooks/useEmployees";
 import { useProjects } from "../Hooks/useProjects";
 import { useCsrfTokenFormEmployee } from "../Hooks/useCsrfTokenFormEmployee";
+import { BackButton } from "../Buttons/BackButton";
 
 interface EmployeeFormProps {
   employeeId: number;
@@ -264,7 +265,12 @@ export function EmployeeForm({ employeeId, setShowForm }: EmployeeFormProps) {
                   required
                 />
               </div>
-              <SubmitButton id={employeeId} />
+              <div className="d-flex justify-content-center">
+                <SubmitButton id={employeeId} />
+              </div>
+              <div className="d-flex justify-content-center mt-3">
+                <BackButton setShowForm={setShowForm} />
+              </div>
             </form>
           </div>
         </div>

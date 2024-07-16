@@ -83,9 +83,6 @@ export function ApprovalRequestListPage(): React.JSX.Element {
           approvalRequestId={approvalRequestId}
           setShowForm={setShowForm}
         />
-        <div className="d-flex justify-content-center mt-2 mb-4">
-          <BackButton setShowForm={setShowForm} />
-        </div>
       </>
     );
   }

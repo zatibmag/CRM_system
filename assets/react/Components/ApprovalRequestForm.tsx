@@ -5,6 +5,7 @@ import { useLeaveRequests } from "../Hooks/useLeaveRequest";
 import { ApproveButton } from "../Buttons/ApproveButton";
 import { RejectButton } from "../Buttons/RejectButton";
 import { ShowLeaveRequestData } from "../Components/ShowLeaveRequestData";
+import { BackButton } from "../Buttons/BackButton";
 
 interface ApprovalRequestFormProps {
   approvalRequestId: number;
@@ -110,6 +111,9 @@ export function ApprovalRequestForm({
                 comment={comment}
                 setShowForm={setShowForm}
               />
+              <div className="d-flex justify-content-center mt-3">
+                <BackButton setShowForm={setShowForm} />
+              </div>
             </form>
             {leaveRequestId && (
               <div className="flex-grow-1 ml-2">

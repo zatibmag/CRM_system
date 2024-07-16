@@ -6,6 +6,7 @@ import { useCsrfTokenForm } from "../Hooks/useCsrfTokenForm";
 import { useStatusChoice } from "../Hooks/useStatusChoice";
 import { SubmitButton } from "../Buttons/SumbitButton";
 import { useEmployees } from "../Hooks/useEmployees";
+import { BackButton } from "../Buttons/BackButton";
 
 interface ProjectFormProps {
   projectId: number;
@@ -188,7 +189,12 @@ export function ProjectForm({ projectId, setShowForm }: ProjectFormProps) {
                   ))}
                 </select>
               </div>
-              <SubmitButton id={projectId} />
+              <div className="d-flex justify-content-center">
+                <SubmitButton id={projectId} />
+              </div>
+              <div className="d-flex justify-content-center mt-3">
+                <BackButton setShowForm={setShowForm} />
+              </div>
             </form>
           </div>
         </div>

@@ -6,7 +6,10 @@ interface BackButtonProps {
 
 export function BackButton({ setShowForm }: BackButtonProps) {
   return (
-    <button className="btn btn-primary mt-3" onClick={() => setShowForm(false)}>
+    <button
+      className="btn btn-warning col-12"
+      onClick={() => setShowForm(false)}
+    >
       Back button
     </button>
   );
