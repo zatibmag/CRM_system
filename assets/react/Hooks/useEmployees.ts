@@ -6,7 +6,7 @@ export function useEmployees() {
 
   const fetchEmployees = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/employees");
+      const response = await axios.get("https://52.200.134.52/employees");
       setEmployees(response.data);
     } catch (error) {
       console.error(error);

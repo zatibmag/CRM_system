@@ -7,7 +7,7 @@ export function useAbsenceReason() {
     const fetchStatusChoice = async () => {
       try {
         const response = await axios.post(
-          "http://127.0.0.1:8000/leave-request/absence-reason"
+          "https://52.200.134.52/leave-request/absence-reason"
         );
         setAbsenceReasons(response.data);
       } catch (error) {

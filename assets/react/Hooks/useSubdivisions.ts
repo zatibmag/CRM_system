@@ -7,7 +7,7 @@ export function useSubdivisions() {
     const fetchSubdivisions = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/employees/subdivisions"
+          "https://52.200.134.52/employees/subdivisions"
         );
         setSubdivisions(response.data);
       } catch (error) {

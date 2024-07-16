@@ -8,7 +8,7 @@ export function useCsrfTokenFormApprovalRequest() {
     const fetchCsrfTokenForm = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/approval-request/csrf-token-form-approval-request"
+          "https://52.200.134.52/approval-request/csrf-token-form-approval-request"
         );
         setCsrfTokenForm(response.data.csrf_token);
       } catch (error) {

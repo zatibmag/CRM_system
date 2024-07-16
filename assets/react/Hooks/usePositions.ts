@@ -7,7 +7,7 @@ export function usePositions() {
     const fetchPositions = async () => {
       try {
         const response = await axios.post(
-          "http://127.0.0.1:8000/employees/positions"
+          "https://52.200.134.52/employees/positions"
         );
         setPositions(response.data);
       } catch (error) {

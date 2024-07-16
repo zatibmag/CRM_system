@@ -7,7 +7,9 @@ export function useApprovalRequests() {
   useEffect(() => {
     const fetchApprovalRequests = async () => {
       try {
-        const response = await axios.get("//127.0.0.1:8000/approval-request");
+        const response = await axios.get(
+          "https://52.200.134.52/approval-request"
+        );
         setApprovalRequests(response.data);
       } catch (error) {
         console.error(error);

@@ -7,7 +7,7 @@ export function useStatusChoice() {
     const fetchStatusChoice = async () => {
       try {
         const response = await axios.post(
-          "http://127.0.0.1:8000/project/status-choice"
+          "https://52.200.134.52/project/status-choice"
         );
         setStatusChoice(response.data);
       } catch (error) {

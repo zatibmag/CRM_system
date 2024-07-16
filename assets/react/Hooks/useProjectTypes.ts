@@ -9,7 +9,7 @@ export function useProjectType() {
     const fetchProjectTypes = async () => {
       try {
         const response = await axios.post(
-          "http://127.0.0.1:8000/project/project-types"
+          "https://52.200.134.52/project/project-types"
         );
         setAvailableProjectTypes(response.data);
       } catch (error) {

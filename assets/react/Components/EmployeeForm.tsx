@@ -153,7 +153,7 @@ export function EmployeeForm({ employeeId, setShowForm }: EmployeeFormProps) {
                   onChange={(e) => setPeoplePartner(e.target.value)}
                   required
                 >
-                  <option value="">Select Project Manager</option>
+                  <option value="">Select HR Manager</option>
                   {projectManagers.map((manager) => (
                     <option key={manager.id} value={manager.fullName}>
                       {manager.fullName}
@@ -170,7 +170,6 @@ export function EmployeeForm({ employeeId, setShowForm }: EmployeeFormProps) {
                   className="form-select"
                   value={position}
                   onChange={(e) => setPosition(e.target.value)}
-                  required
                 >
                   <option value="">Select position</option>
                   {positions.map((position) => (

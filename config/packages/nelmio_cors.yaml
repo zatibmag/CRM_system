@@ -1,0 +1,10 @@
+nelmio_cors:
+  defaults:
+    allow_origin: ["https://52.200.134.52"]
+    allow_credentials: true
+    allow_headers: ["content-type", "authorization", "x-xsrf-token"]
+    expose_headers: ["link"]
+    allow_methods: ["GET", "OPTIONS", "POST", "PUT", "DELETE"]
+    max_age: 3600
+  paths:
+    "^/": ~
