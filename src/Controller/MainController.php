@@ -30,35 +30,43 @@ class MainController extends AbstractController
     #[Route('/newEmployee', name: 'new_employee', methods: ['GET'])]
     public function newEmployee(): JsonResponse
     {
-        // Create a new Employee entity
-        $employee = new Employee();
-        $employee->setFullName('Aboba Abobowitch');
-        $employee->setRoles(['ROLE_PROJECT_MANAGER']);
-        $employee->setPassword('password'); // You should hash the password in a real application
-        $employee->setSubdivision('Subdivision');
-        $employee->setPosition('PROJECT_MANAGER');
-        $employee->setStatus('Active');
-        $employee->setPeoplePartner('People Partner');
-        $employee->setOutOfOfficeBalance('10 days');
-        $employee->setPhoto(null);
-
-        // Persist the employee to the database
-        $this->entityManager->persist($employee);
+        $employee1 = new Employee();
+        $employee1->setFullName('Project Manager');
+        $employee1->setRoles(['ROLE_PROJECT_MANAGER']);
+        $employee1->setPassword('password');
+        $employee1->setSubdivision('Subdivision');
+        $employee1->setPosition('PROJECT_MANAGER');
+        $employee1->setStatus('Active');
+        $employee1->setPeoplePartner('People Partner');
+        $employee1->setOutOfOfficeBalance(10);
+        $employee1->setPhoto(null);
+    
+        $this->entityManager->persist($employee1);
+    
+        $employee2 = new Employee();
+        $employee2->setFullName('HR Manager');
+        $employee2->setRoles(['ROLE_HR_MANAGER']);
+        $employee2->setPassword('password');
+        $employee2->setSubdivision('Subdivision');
+        $employee2->setPosition('HR_MANAGER');
+        $employee2->setStatus('Active');
+        $employee2->setPeoplePartner('People Partner');
+        $employee2->setOutOfOfficeBalance(10);
+        $employee2->setPhoto(null);
+    
+        $this->entityManager->persist($employee2);
+    
         $this->entityManager->flush();
 
-        // Return the newly created employee as a JSON response
         return new JsonResponse(['message' => 'Employee created successfully'], JsonResponse::HTTP_CREATED);
     }
-
 
     #[Route('/showEmployee', name: 'show_employee')]
     public function findAllEmployees(): JsonResponse
     {
-        // Fetch all employees from the database
         $employeeRepository = $this->entityManager->getRepository(Employee::class);
         $employees = $employeeRepository->findAll();
 
-        // Prepare data array for JSON response
         $data = [];
         foreach ($employees as $employee) {
             $data[] = [
@@ -74,7 +82,6 @@ class MainController extends AbstractController
             ];
         }
 
-        // Return employees as a JSON response
         return new JsonResponse($data);
     }
 }
