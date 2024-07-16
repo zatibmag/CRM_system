@@ -8,7 +8,7 @@ export function useCsrfTokenDeleteLeaveRequest() {
     const fetchCsrfTokenDelete = async () => {
       try {
         const response = await axios.get(
-          "https://52.200.134.52/leave-request/csrf-token-delete-leave-request"
+          "http://127.0.0.1:8000/leave-request/csrf-token-delete-leave-request"
         );
         setCsrfTokenDelete(response.data.csrf_token);
       } catch (error) {

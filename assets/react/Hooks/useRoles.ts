@@ -7,7 +7,7 @@ export function useRoles() {
     const fetchRoles = async () => {
       try {
         const response = await axios.get(
-          "https://52.200.134.52/employees/roles"
+          "http://127.0.0.1:8000/employees/roles"
         );
         setRoles(response.data);
       } catch (error) {

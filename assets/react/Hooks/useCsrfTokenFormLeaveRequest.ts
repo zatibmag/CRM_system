@@ -8,7 +8,7 @@ export function useCsrfTokenFormLeaveRequest() {
     const fetchCsrfTokenForm = async () => {
       try {
         const response = await axios.get(
-          "https://52.200.134.52/leave-request/csrf-token-form-leave-request"
+          "http://127.0.0.1:8000/leave-request/csrf-token-form-leave-request"
         );
         setCsrfTokenForm(response.data.csrf_token);
       } catch (error) {

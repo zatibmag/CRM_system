@@ -7,7 +7,7 @@ export function useProjects() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await axios.get("https://52.200.134.52/project");
+        const response = await axios.get("//127.0.0.1:8000/project");
         setProjects(response.data);
       } catch (error) {
         console.error(error);
