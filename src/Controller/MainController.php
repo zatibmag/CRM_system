@@ -36,7 +36,7 @@ class MainController extends AbstractController
         $employee->setRoles(['ROLE_PROJECT_MANAGER']);
         $employee->setPassword('password'); // You should hash the password in a real application
         $employee->setSubdivision('Subdivision');
-        $employee->setPosition('Position');
+        $employee->setPosition('PROJECT_MANAGER');
         $employee->setStatus('Active');
         $employee->setPeoplePartner('People Partner');
         $employee->setOutOfOfficeBalance('10 days');
