@@ -27,6 +27,7 @@ Additional tasks:
 For the backend, I used: Symfony/PHP.
 For the frontend, I used: React/TypeScript.
 For CSS, I used: Bootstrap.
+For Database, I used: MySQL.
 The project is launched on: AWS.
 
 For any questions, you can contact me at viktor.hraboviuk@gmail.com.
