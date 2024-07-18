@@ -30,4 +30,7 @@ For CSS, I used: Bootstrap.
 For Database, I used: MySQL.
 The project is launched on: AWS.
 
+You can find the front-end files at this path: AppForSmartBusiness/assets/react.
+You can find the back-end files at this path: AppForSmartBusiness/src.
+
 For any questions, you can contact me at viktor.hraboviuk@gmail.com.
